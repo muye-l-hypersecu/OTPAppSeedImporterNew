@@ -1,4 +1,5 @@
 ﻿using System;
+using Model;
 
 namespace Utility;
 
@@ -22,7 +23,7 @@ public class DatabaseManager
 
 	// EFFECT: Checks for duplicates in serial numbers
 	// RETURNS: a list of duplicate serial numbers
-	public static List<string> CheckForDuplicates(string dbPath, List<seedEntry> entries)
+	public static List<string> CheckForDuplicates(string dbPath, List<SeedEntry> entries)
 	{
 		return new List<string>();
 	}
