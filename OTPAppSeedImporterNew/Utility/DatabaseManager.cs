@@ -5,9 +5,25 @@ namespace Utility;
 // Manages imports and connections to database. 
 public class DatabaseManager
 {
-	// Dummy function, remove later.
-	public static void DoThisManager()
+
+	// EFFECT: Initializes database
+	public static void InitializeDatabase(string dbPath)
 	{
-		// Do this
+
+	}
+
+	// EFFECT: Inserts the seed entries into database
+	// RETURNS: a number of seed entries inserted
+	public static int InsertSeedEntries(string dbPath, List<SeedEntry> entries, string specId)
+	{
+		return 0;
+	}
+
+
+	// EFFECT: Checks for duplicates in serial numbers
+	// RETURNS: a list of duplicate serial numbers
+	public static List<string> CheckForDuplicates(string dbPath, List<seedEntry> entries)
+	{
+		return new List<string>();
 	}
 }
