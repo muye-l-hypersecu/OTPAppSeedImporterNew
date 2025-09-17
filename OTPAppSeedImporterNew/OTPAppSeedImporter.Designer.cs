@@ -37,6 +37,7 @@
             ClientSize = new Size(800, 450);
             Name = "OTPAppSeedImporter";
             Text = "OTPAppSeedImporter";
+            Load += OTPAppSeedImporter_Load;
             ResumeLayout(false);
         }
 
