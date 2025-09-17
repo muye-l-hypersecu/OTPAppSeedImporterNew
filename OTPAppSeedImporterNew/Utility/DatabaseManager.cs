@@ -4,7 +4,7 @@ using Model;
 namespace Utility;
 
 // Manages imports and connections to database. 
-public class DatabaseManager
+public static class DatabaseManager
 {
 
 	// EFFECT: Initializes database
