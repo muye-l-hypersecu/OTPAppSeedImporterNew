@@ -1,1 +1,33 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio files
 .vs/
+*.user
+*.suo
+
+# Auto-generated NuGet files
+project.lock.json
+project.assets.json
+*.dgspec.json
+*.nuget.props
+*.nuget.targets
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Optional: Rider
+.idea/
+
+# Optional: Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Log files
+*.log
+
+# Other
+*.cache

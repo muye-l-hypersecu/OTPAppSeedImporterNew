@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OTPAppSeedImporterNew")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2868fe7d3fdbe846be8bee4274c7b5c50e0492dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c3c4e99d8676d8d2c4b58ae5480793d66afcd3de")]
 [assembly: System.Reflection.AssemblyProductAttribute("OTPAppSeedImporterNew")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OTPAppSeedImporterNew")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
