@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Utility;
 
@@ -9,19 +10,37 @@ namespace Utility;
 /// </summary>
 public static class SeedFileParser
 {
+
     /// <summary>
-    /// Parses the seed file, and returns a list of seed entries
+    /// Parses the seed file, and returns a list of seed entries and the number of invalid entries
     /// Potentially throws the following exceptions:
     /// - IO Exception: the file cannot be read
     /// - FileNotFoundException: the filepath cannot be found
     /// </summary>
     /// <returns>List of seed entries</returns>
-    public static List<SeedEntry> ParseSeedFile() 
+    public static async Task<Pair<List<SeedEntry>, int>> ParseSeedFile(string filePath) 
     {
-        // Instantiate the seed entry array list, then get all lines of the filepath
+        // Instantiate the seed entry array list and invalid entries accumulator, then get all lines of the filepath
         List<SeedEntry> seedEntries = new List<SeedEntry>();
 
-        return seedEntries;
+        string[] lines = await File.ReadAllLinesAsync(filePath);
+        int invalid = 0;
+        foreach (string line in lines)
+        {
+            string[] value = line.Split(',');
+
+            // Only parse valid entries with valid serial number and seed formats. If the line is invalid, then skip it. 
+            if (value.Length != 2 || !Regex.IsMatch(value[0], @"^\d+$") || Regex.IsMatch(value[1], @"^[0-9a-f]+$", RegexOptions.IgnoreCase))
+            {
+                invalid++;
+                continue;
+            }
+
+            // Proceed if entries are valid. 
+            seedEntries.Add(new SeedEntry(value[0], value[1]));
+        }
+        return new Pair<List<SeedEntry>, int>(seedEntries, invalid);
     }
+    
 }
 
