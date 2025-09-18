@@ -9,7 +9,6 @@ namespace Utility;
 // Manages imports and connections to database. 
 public static class DatabaseManager
 {
-
 	// EFFECT: Initializes database
 	public static void InitializeDatabase(string dbPath)
 	{
@@ -123,7 +122,7 @@ public static class DatabaseManager
 			var count = Convert.ToInt32(cmd.ExecuteScalar());
 			return count > 0;
 		}
-		catch (Exception ex)
+		catch
 		{
             return false;
         }
