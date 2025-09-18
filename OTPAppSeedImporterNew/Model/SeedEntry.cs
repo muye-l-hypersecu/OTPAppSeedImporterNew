@@ -5,7 +5,7 @@ namespace Model;
 // Represents the class that stores the seed information
 public class SeedEntry
 {
-    // Fields 
+    // Serial number and seed (public key) fields
     private readonly string serialNumber, seed;
 
     // Constructor with custom serial number and seed setters
