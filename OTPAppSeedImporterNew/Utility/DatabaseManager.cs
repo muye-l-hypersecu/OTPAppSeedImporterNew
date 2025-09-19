@@ -98,7 +98,7 @@ public static class DatabaseManager
 
 
 	// EFFECT: Checks if the provided specId is in the table.
-	public static bool IsValidSpecId(SQLiteConnection connection, string specId)
+	private static bool IsValidSpecId(SQLiteConnection connection, string specId)
 	{
 		try
 		{
@@ -113,16 +113,5 @@ public static class DatabaseManager
 		{
             return false;
         }
-	}
-
-	///// HELPER FUNCTIONS /////
-
-	/// <summary>
-	/// HELPER create the data base tables if they haven't been created yet
-	/// </summary>
-	private static void CreateDatabaseTables()
-	{
-		
-		
 	}
 }
