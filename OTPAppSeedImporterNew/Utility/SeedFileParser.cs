@@ -30,12 +30,9 @@ public static class SeedFileParser
             string[] value = line.Split(',');
 
             // Only parse valid entries with valid serial number and seed formats. If the line is invalid, then skip it. 
-<<<<<<< HEAD
             // Valid: - Two entries (Serial Number, Seed)
             //        - Serial Number must be 0-9
             //        - Seed must be 0-9a-fA-F
-=======
->>>>>>> muye
             if (value.Length != 2 || !Regex.IsMatch(value[0], @"^\d+$") || !Regex.IsMatch(value[1], @"^[0-9a-f]+$", RegexOptions.IgnoreCase))
             {
                 invalid++;
