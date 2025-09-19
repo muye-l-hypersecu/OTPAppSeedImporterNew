@@ -10,7 +10,6 @@ namespace Utility;
 /// </summary>
 public static class SeedFileParser
 {
-
     /// <summary>
     /// Parses the seed file, and returns a list of seed entries and the number of invalid entries
     /// Potentially throws the following exceptions:
@@ -39,11 +38,25 @@ public static class SeedFileParser
                 continue;
             }
 
-            // Proceed if entries are valid. 
-            seedEntries.Add(new SeedEntry(value[0], value[1]));
+            // Checks if there are duplicate serial numbers.
+            bool duplicate = false;
+            foreach (SeedEntry seedEntry in seedEntries)
+            {
+                if (seedEntry.GetSerialNumber() == value[0])
+                {
+                    duplicate = true;
+                    break;
+                }
+            }
+
+            // Proceed if entries are valid and no duplicates.
+            if (!duplicate)
+            {
+                seedEntries.Add(new SeedEntry(value[0], value[1]));
+            }
+            
         }
         return new Pair<List<SeedEntry>, int>(seedEntries, invalid);
     }
-    
 }
 

@@ -90,6 +90,10 @@ namespace OTPAppSeedImporterNew
                             label6.Text = $"{parsedFile.Second.ToString()} invalid entries in the selected seed file have been removed.";
                         }
                     }
+                    else
+                    {
+                        label6.Text = "";
+                    }
                     pictureBox1.Visible = true;
 
                     listBox1.Items.Add("Serial Number           Seed");
@@ -118,6 +122,7 @@ namespace OTPAppSeedImporterNew
                 databasePath = openFileDialog2.FileName;
                 dbFileSelected = true;
                 pictureBox2.Visible = true;
+                label6.Text = "";
             }
         }
 
