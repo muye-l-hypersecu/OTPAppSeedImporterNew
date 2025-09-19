@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Data.SqlTypes;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Model;
 
@@ -9,7 +10,7 @@ namespace Utility;
 // Manages imports and connections to database. 
 public static class DatabaseManager
 {
-	// EFFECT: Initializes database
+	// EFFECT: Initializes database, such as creating the tables when it doesn't exist yet. 
 	public static void InitializeDatabase(string dbPath)
 	{
 		// check if dbPath exists
@@ -18,30 +19,18 @@ public static class DatabaseManager
 			throw new FileNotFoundException($"Database file not found: {dbPath}");
 		}
 
-		// connect to database
+		// Get the sql string from the Init.sql file, and then open the database connection
+		string sql = File.ReadAllText("Init.sql");
 		using var connection = new SQLiteConnection($"Data Source={dbPath}");
 		connection.Open();
 
-		//check if the required tables exist
-		string[] requiredTables = { "tokeninfo", "tokenspec" };
-
-		foreach (string table in requiredTables) {
-			// sqlite_master is a system table in SQLite that holds information about all objects in the database.
-			// @tableName is a parameter you'll pass.
-			string sql = "SELECT name FROM sqlite_master WHERE type='table' AND name=@tableName";
-			using var cmd = new SQLiteCommand(sql, connection);
-			cmd.Parameters.AddWithValue("@tableName", table);
-			// runs the SQL and returns the first column of the first row in the result set.
-			object result = cmd.ExecuteScalar();
-			if (result == null || result == DBNull.Value)
-			{
-				throw new InvalidOperationException($"Databse is missing required table: {table}");
-			}
-		}
+		// Execute the sql file
+		using var sqLiteCmd = new SQLiteCommand(sql, connection);
+		sqLiteCmd.ExecuteNonQuery();
 	}
 
 	// EFFECT: Inserts the seed entries into database
-	// RETURNS: a number of seed entries inserted
+	// RETURNS: the number of serial numbers inserted
 	public static int InsertSeedEntries(string dbPath, List<SeedEntry> entries, string specId)
 	{
 		InitializeDatabase(dbPath);
@@ -58,26 +47,24 @@ public static class DatabaseManager
 
 		// prepares for insertion
 		using var command = connection.CreateCommand();
-		command.CommandText = @"INSERT INTO tokeninfo (tokenId, serialNumber, seed, specId, importTime) " +
-                            "VALUES (@tokenId, @serialNumber, @seed, @specId, @importTime)";
+		command.CommandText = @"INSERT INTO tokeninfo (serialNumber, seed, specId) " +
+                            "VALUES (@serialNumber, @seed, @specId)";
 
-		int tokenId = 1;
-		string importTime = DateTime.UtcNow.ToString("o");
+		int numberEntries = 0;
         // inserts entries
         foreach (var entry in entries)
 		{
+			numberEntries++;
 			command.Parameters.Clear();
-            command.Parameters.AddWithValue("@tokenId", tokenId++);
             command.Parameters.AddWithValue("@serialNumber", entry.GetSerialNumber());
-            command.Parameters.AddWithValue("@serialNumber", entry.GetSeed());
-            command.Parameters.AddWithValue("@serialNumber", specId);
-            command.Parameters.AddWithValue("@serialNumber", importTime);
+            command.Parameters.AddWithValue("@seed", entry.GetSeed());
+            command.Parameters.AddWithValue("@specId", specId);
 
             // executes SQL commands that do not return a result but modifies data in the database.
             command.ExecuteNonQuery();
 			
         }
-		return tokenId;
+		return numberEntries;
 	}
 
 
@@ -111,7 +98,7 @@ public static class DatabaseManager
 
 
 	// EFFECT: Checks if the provided specId is in the table.
-	public static bool IsValidSpecId(SQLiteConnection connection, string specId)
+	private static bool IsValidSpecId(SQLiteConnection connection, string specId)
 	{
 		try
 		{

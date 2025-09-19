@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
@@ -25,4 +25,9 @@
 		<ProjectReference Include="..\OTPAppSeedImporterNew\OTPAppSeedImporterNew.csproj"/>
 	</ItemGroup>
 
+	<ItemGroup>
+		<Content Include="..\OTPAppSeedImporterNew\Utility\init.sql">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>
