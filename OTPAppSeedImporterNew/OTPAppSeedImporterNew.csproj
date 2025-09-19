@@ -27,4 +27,11 @@
     </EmbeddedResource>
   </ItemGroup>
 
+	<ItemGroup>
+		<Content Include="Utility\Init.sql">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>Init.sql</TargetPath>
+		</Content>
+	</ItemGroup>
+
 </Project>
