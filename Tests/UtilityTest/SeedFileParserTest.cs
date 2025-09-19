@@ -5,13 +5,16 @@ using Model;
 
 namespace UtilityTest;
 
-// Represents the test class the ensures the seed file parser is working properly
+/// <summary>
+/// Represents the test class the ensures the seed file parser is working properly.
+/// Also includes sample seed files with both valid and invalid entries for testing purposes.
+/// </summary>
 public class SeedFileParserTest
 {
     // Initialize the file paths and return values;
-    public readonly string allValidSeedFilePath = "../../SampleSeedFiles/sample_seeds_all_valid.txt";
-    public readonly string someInvalidSeedFilePath = "../../SampleSeedFiles/sample_seeds_some_invalid.txt";
-    public readonly string nonExistentFilePath = "../../SampleSeedFiles/not_exists.txt";
+    public readonly string allValidSeedFilePath = "../../../SampleSeedFiles/sample_seeds_all_valid.txt";
+    public readonly string someInvalidSeedFilePath = "../../../SampleSeedFiles/sample_seeds_some_invalid.txt";
+    public readonly string nonExistentFilePath = "../../../SampleSeedFiles/not_exists.txt";
     public Pair<List<SeedEntry>, int> allValidReturn;
     public Pair<List<SeedEntry>, int> someInvalidReturn;
 
@@ -44,6 +47,20 @@ public class SeedFileParserTest
         Assert.That(someInvalidReturn.First[0].GetSeed(), Is.EqualTo("AE7AB67157F90B1935B8E7979BAE30FB8C6EA5E5"));
         Assert.That(someInvalidReturn.First[1].GetSerialNumber(), Is.EqualTo("111111111111"));
         Assert.That(someInvalidReturn.First[1].GetSeed(), Is.EqualTo("1111111111ABCDEF1234567890ABCDEF12345678"));
+    }
+
+    // Tests a seed files that does not exists to make sure it throws exception
+    [Test]
+    public async Task FileDoesNotExistTest()
+    {
+        try
+        {
+            await SeedFileParser.ParseSeedFile(nonExistentFilePath);
+            Assert.Fail();
+        } catch (FileNotFoundException)
+        {
+
+        }
     }
     
 }

@@ -26,9 +26,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\SampleSeedFiles\**\*.*">
+		<Content Include="..\OTPAppSeedImporterNew\Utility\init.sql">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+		</Content>
 	</ItemGroup>
-
 </Project>
