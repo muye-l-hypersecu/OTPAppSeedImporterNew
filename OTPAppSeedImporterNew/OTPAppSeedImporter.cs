@@ -12,6 +12,7 @@ namespace OTPAppSeedImporterNew
         private bool seedFileSelected;
         private bool dbFileSelected;
         private string databasePath;
+        private int numEntriesSuccess;
         private Pair<List<SeedEntry>, Pair<int, int>> parsedFile;
         public OTPAppSeedImporter()
         {
@@ -83,12 +84,8 @@ namespace OTPAppSeedImporterNew
 
                     parsedFile = await SeedFileParser.ParseSeedFile(openFileDialog1.FileName);
                     listBox1.Items.Clear();
-<<<<<<< HEAD
-                    if (parsedFile.Second > 0)
-=======
                     numEntriesSuccess = parsedFile.First.Count;
                     if (parsedFile.Second.First > 0)
->>>>>>> muye
                     {
                         label6.ForeColor = Color.Green;
                         if (parsedFile.Second.First == 1)
