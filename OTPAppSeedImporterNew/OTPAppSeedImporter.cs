@@ -265,7 +265,7 @@ namespace OTPAppSeedImporterNew
         }
 
         ///// HELPER FUNCTIONS /////
-        
+
         // Resets the inputs, except for the bottom listbox message output
         private void ResetPage()
         {
@@ -284,6 +284,11 @@ namespace OTPAppSeedImporterNew
 
             // Wipes the list of seed entries
             listBox1.Items.Clear();
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
 
         }
     }

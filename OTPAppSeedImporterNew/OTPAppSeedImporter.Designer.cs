@@ -30,6 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OTPAppSeedImporter));
             tableLayoutPanel4 = new TableLayoutPanel();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            button4 = new Button();
+            button6 = new Button();
+            button5 = new Button();
+            label4 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             button1 = new Button();
             comboBox1 = new ComboBox();
@@ -41,20 +46,16 @@
             label2 = new Label();
             label3 = new Label();
             pictureBox1 = new PictureBox();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            button5 = new Button();
-            button4 = new Button();
-            label4 = new Label();
             listBox1 = new ListBox();
             listBox2 = new ListBox();
             openFileDialog1 = new OpenFileDialog();
             openFileDialog2 = new OpenFileDialog();
             tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel4
@@ -62,9 +63,9 @@
             tableLayoutPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel4.ColumnCount = 1;
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.Controls.Add(tableLayoutPanel3, 0, 4);
             tableLayoutPanel4.Controls.Add(tableLayoutPanel1, 0, 0);
             tableLayoutPanel4.Controls.Add(tableLayoutPanel2, 0, 1);
-            tableLayoutPanel4.Controls.Add(flowLayoutPanel1, 0, 4);
             tableLayoutPanel4.Controls.Add(listBox1, 0, 2);
             tableLayoutPanel4.Controls.Add(listBox2, 0, 3);
             tableLayoutPanel4.Location = new Point(3, 8);
@@ -72,11 +73,86 @@
             tableLayoutPanel4.RowCount = 5;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 100F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 67.2514648F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 25.1462F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 7.602338F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 72.7848053F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 27.21519F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
             tableLayoutPanel4.Size = new Size(976, 641);
             tableLayoutPanel4.TabIndex = 5;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel3.ColumnCount = 4;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 170F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 146F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
+            tableLayoutPanel3.Controls.Add(button4, 1, 0);
+            tableLayoutPanel3.Controls.Add(button6, 3, 0);
+            tableLayoutPanel3.Controls.Add(button5, 0, 0);
+            tableLayoutPanel3.Controls.Add(label4, 2, 0);
+            tableLayoutPanel3.Location = new Point(3, 598);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Size = new Size(970, 40);
+            tableLayoutPanel3.TabIndex = 6;
+            // 
+            // button4
+            // 
+            button4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            button4.BackColor = Color.Red;
+            button4.FlatAppearance.BorderSize = 0;
+            button4.FlatStyle = FlatStyle.Popup;
+            button4.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            button4.ForeColor = SystemColors.Control;
+            button4.Location = new Point(173, 3);
+            button4.Name = "button4";
+            button4.Size = new Size(140, 34);
+            button4.TabIndex = 0;
+            button4.Text = "Remove Entry";
+            button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
+            // 
+            // button6
+            // 
+            button6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            button6.BackColor = Color.Red;
+            button6.FlatStyle = FlatStyle.Popup;
+            button6.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button6.ForeColor = SystemColors.Control;
+            button6.Location = new Point(773, 3);
+            button6.Name = "button6";
+            button6.Size = new Size(194, 34);
+            button6.TabIndex = 3;
+            button6.Text = "Remove Duplicates";
+            button6.UseVisualStyleBackColor = false;
+            button6.Click += button6_Click;
+            // 
+            // button5
+            // 
+            button5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            button5.BackColor = SystemColors.Highlight;
+            button5.FlatStyle = FlatStyle.Popup;
+            button5.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button5.ForeColor = SystemColors.Control;
+            button5.Location = new Point(3, 3);
+            button5.Name = "button5";
+            button5.Size = new Size(164, 34);
+            button5.TabIndex = 2;
+            button5.Text = "Download Entry";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label4.Location = new Point(319, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(448, 40);
+            label4.TabIndex = 1;
+            label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel1
             // 
@@ -226,60 +302,6 @@
             pictureBox1.TabStop = false;
             pictureBox1.Visible = false;
             // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            flowLayoutPanel1.Controls.Add(button5);
-            flowLayoutPanel1.Controls.Add(button4);
-            flowLayoutPanel1.Controls.Add(label4);
-            flowLayoutPanel1.Location = new Point(0, 604);
-            flowLayoutPanel1.Margin = new Padding(0);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(976, 37);
-            flowLayoutPanel1.TabIndex = 5;
-            // 
-            // button5
-            // 
-            button5.Anchor = AnchorStyles.None;
-            button5.BackColor = SystemColors.Highlight;
-            button5.FlatStyle = FlatStyle.Popup;
-            button5.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button5.ForeColor = SystemColors.Control;
-            button5.Location = new Point(3, 3);
-            button5.Name = "button5";
-            button5.Size = new Size(162, 32);
-            button5.TabIndex = 2;
-            button5.Text = "Download Entry";
-            button5.UseVisualStyleBackColor = false;
-            button5.Click += button5_Click;
-            // 
-            // button4
-            // 
-            button4.Anchor = AnchorStyles.None;
-            button4.BackColor = Color.Red;
-            button4.FlatAppearance.BorderSize = 0;
-            button4.FlatStyle = FlatStyle.Popup;
-            button4.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
-            button4.ForeColor = SystemColors.Control;
-            button4.Location = new Point(168, 3);
-            button4.Margin = new Padding(0);
-            button4.Name = "button4";
-            button4.Size = new Size(147, 32);
-            button4.TabIndex = 0;
-            button4.Text = "Remove Entry";
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button4_Click;
-            // 
-            // label4
-            // 
-            label4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label4.Location = new Point(318, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(346, 38);
-            label4.TabIndex = 1;
-            label4.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // listBox1
             // 
             listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -288,7 +310,7 @@
             listBox1.ItemHeight = 28;
             listBox1.Location = new Point(3, 165);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(970, 312);
+            listBox1.Size = new Size(970, 284);
             listBox1.TabIndex = 4;
             // 
             // listBox2
@@ -298,7 +320,7 @@
             listBox2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             listBox2.FormattingEnabled = true;
             listBox2.ItemHeight = 17;
-            listBox2.Location = new Point(3, 487);
+            listBox2.Location = new Point(3, 480);
             listBox2.Name = "listBox2";
             listBox2.Size = new Size(970, 106);
             listBox2.TabIndex = 6;
@@ -322,13 +344,13 @@
             Text = "OTPAppSeedImporter";
             Load += OTPAppSeedImporter_Load;
             tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -349,10 +371,11 @@
         private ListBox listBox1;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
-        private FlowLayoutPanel flowLayoutPanel1;
         private Button button4;
         private Label label4;
         private ListBox listBox2;
         private Button button5;
+        private Button button6;
+        private TableLayoutPanel tableLayoutPanel3;
     }
 }
