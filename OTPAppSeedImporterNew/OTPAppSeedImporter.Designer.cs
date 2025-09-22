@@ -82,12 +82,12 @@
             // 
             listBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listBox2.BackColor = SystemColors.MenuBar;
-            listBox2.Font = new Font("Segoe UI Semibold", 5.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            listBox2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             listBox2.FormattingEnabled = true;
-            listBox2.ItemHeight = 10;
+            listBox2.ItemHeight = 17;
             listBox2.Location = new Point(3, 487);
             listBox2.Name = "listBox2";
-            listBox2.Size = new Size(970, 114);
+            listBox2.Size = new Size(970, 106);
             listBox2.TabIndex = 6;
             listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
             // 
