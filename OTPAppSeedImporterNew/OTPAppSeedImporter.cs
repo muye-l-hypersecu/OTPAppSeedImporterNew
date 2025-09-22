@@ -12,7 +12,7 @@ namespace OTPAppSeedImporterNew
         private bool seedFileSelected;
         private bool dbFileSelected;
         private string databasePath;
-        private Pair<List<SeedEntry>, int> parsedFile;
+        private Pair<List<SeedEntry>, Pair<int, int>> parsedFile;
         public OTPAppSeedImporter()
         {
             InitializeComponent();
@@ -83,10 +83,15 @@ namespace OTPAppSeedImporterNew
 
                     parsedFile = await SeedFileParser.ParseSeedFile(openFileDialog1.FileName);
                     listBox1.Items.Clear();
+<<<<<<< HEAD
                     if (parsedFile.Second > 0)
+=======
+                    numEntriesSuccess = parsedFile.First.Count;
+                    if (parsedFile.Second.First > 0)
+>>>>>>> muye
                     {
                         label6.ForeColor = Color.Green;
-                        if (parsedFile.Second == 1)
+                        if (parsedFile.Second.First == 1)
                         {
                             label6.Text = "1 invalid entry in the selected seed file has been removed.";
                         }
