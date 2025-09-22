@@ -83,7 +83,7 @@ public class DatabaseManagerTest
     public async Task InsertSeedEntriesTest()
     {
         string seedFilePath = "../../../SampleSeedFiles/sample_seeds_all_valid.txt";
-        Pair<List<SeedEntry>, int> entries = await SeedFileParser.ParseSeedFile(seedFilePath);
+        Pair<List<SeedEntry>, Pair<int, int>> entries = await SeedFileParser.ParseSeedFile(seedFilePath);
 
         // Should successfully insert 3 rows into the tokenInfo table
         try
@@ -117,8 +117,8 @@ public class DatabaseManagerTest
         // There should be one duplicate
         string seedFilePath = "../../../SampleSeedFiles/sample_seeds_all_valid.txt";
         string duplicateSeedFilePath = "../../../SampleSeedFiles/sample_seeds_has_duplicate.txt";
-        Pair <List<SeedEntry>, int> originalEntries = await SeedFileParser.ParseSeedFile(seedFilePath);
-        Pair<List<SeedEntry>, int> newEntries = await SeedFileParser.ParseSeedFile(duplicateSeedFilePath);
+        Pair <List<SeedEntry>, Pair<int, int>> originalEntries = await SeedFileParser.ParseSeedFile(seedFilePath);
+        Pair<List<SeedEntry>, Pair<int, int>> newEntries = await SeedFileParser.ParseSeedFile(duplicateSeedFilePath);
 
         DatabaseManager.InsertSeedEntries(sampleDBWithTablesFilePath, originalEntries.First, SpecTypeExtensions.ToSpecId(SpecType.TOTP30));
         List<string> duplicateList = DatabaseManager.CheckForDuplicates(sampleDBWithTablesFilePath, newEntries.First);
