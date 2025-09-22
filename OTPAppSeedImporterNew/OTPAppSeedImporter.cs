@@ -11,7 +11,6 @@ namespace OTPAppSeedImporterNew
     {
         private bool seedFileSelected;
         private bool dbFileSelected;
-        private int numEntriesSuccess;
         private string databasePath;
         private Pair<List<SeedEntry>, int> parsedFile;
         public OTPAppSeedImporter()
@@ -19,7 +18,6 @@ namespace OTPAppSeedImporterNew
             InitializeComponent();
             seedFileSelected = false;
             dbFileSelected = false;
-            numEntriesSuccess = 0;
             databasePath = "";
         }
 
@@ -47,17 +45,25 @@ namespace OTPAppSeedImporterNew
             else
             {
                 List<string> dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
+                string duplicate = "";
+                foreach (string dbDuplicate in dbDuplicates)
+                {
+                    duplicate += dbDuplicate + " ";
+                }
                 if (dbDuplicates.Count > 0)
                 {
                     label6.ForeColor = Color.Red;
-                    label6.Text = $"These serial numbers already exist in the database. Please remove: {dbDuplicates}";
+                    label6.Text = $"These serial numbers already exist in the database. Please remove: {duplicate}.";
                 }
                 else
                 {
+                    string specId = comboBox1.SelectedItem.ToString();
+                    int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
+
                     label6.ForeColor = Color.Green;
                     label6.Text = $"{numEntriesSuccess} entries inserted successfully.";
                 }
-                
+
             }
 
         }
@@ -77,7 +83,6 @@ namespace OTPAppSeedImporterNew
 
                     parsedFile = await SeedFileParser.ParseSeedFile(openFileDialog1.FileName);
                     listBox1.Items.Clear();
-                    numEntriesSuccess = parsedFile.First.Count;
                     if (parsedFile.Second > 0)
                     {
                         label6.ForeColor = Color.Green;
@@ -123,6 +128,16 @@ namespace OTPAppSeedImporterNew
                 dbFileSelected = true;
                 pictureBox2.Visible = true;
                 label6.Text = "";
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string selectedSn = listBox1.SelectedItem.ToString();
+            listBox1.Items.Remove(listBox1.SelectedItem);
+            if (selectedSn.Length > 11 && parsedFile.First.Contains(selectedSn.Substring(0, 12)))
+            {
+
             }
         }
 
