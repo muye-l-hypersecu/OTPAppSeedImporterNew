@@ -43,10 +43,10 @@
             label3 = new Label();
             pictureBox1 = new PictureBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            button5 = new Button();
             button4 = new Button();
             label4 = new Label();
             listBox1 = new ListBox();
+            button5 = new Button();
             openFileDialog1 = new OpenFileDialog();
             openFileDialog2 = new OpenFileDialog();
             tableLayoutPanel4.SuspendLayout();
@@ -251,20 +251,6 @@
             flowLayoutPanel1.Size = new Size(976, 37);
             flowLayoutPanel1.TabIndex = 5;
             // 
-            // button5
-            // 
-            button5.BackColor = SystemColors.Highlight;
-            button5.FlatStyle = FlatStyle.Popup;
-            button5.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
-            button5.ForeColor = SystemColors.Control;
-            button5.Location = new Point(3, 3);
-            button5.Name = "button5";
-            button5.Size = new Size(161, 35);
-            button5.TabIndex = 2;
-            button5.Text = "Download Entry";
-            button5.UseVisualStyleBackColor = false;
-            button5.Click += button5_Click;
-            // 
             // button4
             // 
             button4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -273,7 +259,7 @@
             button4.FlatStyle = FlatStyle.Popup;
             button4.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             button4.ForeColor = SystemColors.Control;
-            button4.Location = new Point(167, 3);
+            button4.Location = new Point(0, 0);
             button4.Margin = new Padding(0);
             button4.Name = "button4";
             button4.Size = new Size(135, 28);
@@ -301,6 +287,20 @@
             listBox1.Size = new Size(970, 312);
             listBox1.TabIndex = 4;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+            // 
+            // button5
+            // 
+            button5.BackColor = SystemColors.Highlight;
+            button5.FlatStyle = FlatStyle.Popup;
+            button5.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            button5.ForeColor = SystemColors.Control;
+            button5.Location = new Point(3, 3);
+            button5.Name = "button5";
+            button5.Size = new Size(161, 35);
+            button5.TabIndex = 2;
+            button5.Text = "Download Entry";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
             // 
             // openFileDialog1
             // 

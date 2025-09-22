@@ -211,12 +211,14 @@ namespace OTPAppSeedImporterNew
 
                     for (int i = 1; i < listBox1.Items.Count; i++)
                     {
-                        string item = listBox1.Items[i].ToString().Substring(0, 12) + "," + listBox1.Items[i].ToString().Substring(12+NUMBER_OF_SPACES);
+                        string item = listBox1.Items[i].ToString().Substring(0, 12) + "," + listBox1.Items[i].ToString().Substring(12 + NUMBER_OF_SPACES);
                         writer.WriteLine(item);
                     }
                     writer.Close();
                 }
                 dlg.Dispose();
+            }
+        }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
