@@ -138,27 +138,32 @@ namespace OTPAppSeedImporterNew
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string selectedEntry = listBox1.SelectedItem.ToString();
-            SeedEntry entry = new SeedEntry(selectedEntry.Substring(0, 12), selectedEntry.Substring(12 + NUMBER_OF_SPACES));
-            //SeedEntry entry = new SeedEntry("862503025416", "1F0A25A0D1109B1C6B36921407C1CC65296BD7BA");
-            //label4.Text = $"Removed: { selectedEntry }";
-            label4.Text = parsedFile.First.Contains(entry)? "List contains" : "List not contains";
-            
-            if (parsedFile.First.Contains(entry))
+            if (listBox1.SelectedItem != null && listBox1.SelectedIndex != 0)
             {
-                parsedFile.First.Remove(entry);
+                string selectedEntry = listBox1.SelectedItem.ToString();
+                SeedEntry entry = new SeedEntry(selectedEntry.Substring(0, 12), selectedEntry.Substring(12 + NUMBER_OF_SPACES));
+                bool listContainsBefore = parsedFile.First.Contains(entry);
+
+                // Removes from the list of SeedEntry
+                if (parsedFile.First.Contains(entry))
+                {
+                    parsedFile.First.Remove(entry);
+                }
+                // Removes from listbox
+                listBox1.Items.Remove(listBox1.SelectedItem);
+
+                bool listContainsAfter = parsedFile.First.Contains(entry);
+                string text = "";
+                if (listContainsBefore && !listContainsAfter)
+                {
+                    text = "Successfully removed.";
+                }
+                else
+                {
+                    text = listContainsBefore ? "Remove unsuccessful." : "List doesn't contain the item.";
+                }
+                label4.Text = text;
             }
-            listBox1.Items.Remove(listBox1.SelectedItem);
-
-
-
-            // Test to see if selectedItem is removed from the list
-            //string show = "";
-            //foreach(SeedEntry se in parsedFile.First)
-            //{
-            //    show += se.GetSerialNumber();
-            //}
-            //label4.Text = show;
         }
 
     }

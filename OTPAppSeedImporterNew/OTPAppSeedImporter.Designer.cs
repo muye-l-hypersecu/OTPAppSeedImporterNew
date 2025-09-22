@@ -42,10 +42,11 @@
             label3 = new Label();
             pictureBox1 = new PictureBox();
             label6 = new Label();
-            listBox1 = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            button5 = new Button();
             button4 = new Button();
             label4 = new Label();
+            listBox1 = new ListBox();
             openFileDialog1 = new OpenFileDialog();
             openFileDialog2 = new OpenFileDialog();
             tableLayoutPanel4.SuspendLayout();
@@ -64,16 +65,16 @@
             tableLayoutPanel4.Controls.Add(tableLayoutPanel1, 0, 0);
             tableLayoutPanel4.Controls.Add(tableLayoutPanel2, 0, 1);
             tableLayoutPanel4.Controls.Add(label6, 0, 3);
-            tableLayoutPanel4.Controls.Add(listBox1, 0, 2);
             tableLayoutPanel4.Controls.Add(flowLayoutPanel1, 0, 4);
+            tableLayoutPanel4.Controls.Add(listBox1, 0, 2);
             tableLayoutPanel4.Location = new Point(3, 8);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 5;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 8.872394F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 14.89295F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 51.8018036F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 19.36937F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 5.855856F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 8.895405F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 14.9315758F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 54.3447838F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 15.9571943F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 5.871043F));
             tableLayoutPanel4.Size = new Size(1091, 666);
             tableLayoutPanel4.TabIndex = 5;
             // 
@@ -144,7 +145,7 @@
             tableLayoutPanel2.Controls.Add(label2, 1, 0);
             tableLayoutPanel2.Controls.Add(label3, 1, 1);
             tableLayoutPanel2.Controls.Add(pictureBox1, 2, 0);
-            tableLayoutPanel2.Location = new Point(3, 61);
+            tableLayoutPanel2.Location = new Point(3, 62);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
@@ -224,25 +225,15 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 15F);
-            label6.Location = new Point(3, 498);
+            label6.Location = new Point(3, 519);
             label6.Name = "label6";
             label6.Size = new Size(0, 28);
             label6.TabIndex = 3;
             // 
-            // listBox1
-            // 
-            listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            listBox1.Font = new Font("Segoe UI", 15F);
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 28;
-            listBox1.Location = new Point(3, 159);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(1085, 312);
-            listBox1.TabIndex = 4;
-            // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Anchor = AnchorStyles.None;
+            flowLayoutPanel1.Anchor = AnchorStyles.Left;
+            flowLayoutPanel1.Controls.Add(button5);
             flowLayoutPanel1.Controls.Add(button4);
             flowLayoutPanel1.Controls.Add(label4);
             flowLayoutPanel1.Location = new Point(0, 625);
@@ -251,17 +242,31 @@
             flowLayoutPanel1.Size = new Size(1091, 41);
             flowLayoutPanel1.TabIndex = 5;
             // 
+            // button5
+            // 
+            button5.BackColor = SystemColors.Highlight;
+            button5.FlatStyle = FlatStyle.Popup;
+            button5.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            button5.ForeColor = SystemColors.Control;
+            button5.Location = new Point(3, 3);
+            button5.Name = "button5";
+            button5.Size = new Size(161, 35);
+            button5.TabIndex = 2;
+            button5.Text = "Download Entry";
+            button5.UseVisualStyleBackColor = false;
+            // 
             // button4
             // 
             button4.Anchor = AnchorStyles.None;
             button4.BackColor = Color.Red;
+            button4.FlatAppearance.BorderSize = 0;
             button4.FlatStyle = FlatStyle.Popup;
-            button4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button4.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             button4.ForeColor = SystemColors.Control;
-            button4.Location = new Point(0, 0);
+            button4.Location = new Point(167, 3);
             button4.Margin = new Padding(0);
             button4.Name = "button4";
-            button4.Size = new Size(135, 32);
+            button4.Size = new Size(145, 35);
             button4.TabIndex = 0;
             button4.Text = "Remove Entry";
             button4.UseVisualStyleBackColor = false;
@@ -270,10 +275,22 @@
             // label4
             // 
             label4.Anchor = AnchorStyles.None;
-            label4.Location = new Point(138, 2);
+            label4.Font = new Font("Segoe UI", 14F);
+            label4.Location = new Point(315, 6);
             label4.Name = "label4";
-            label4.Size = new Size(486, 28);
+            label4.Size = new Size(346, 28);
             label4.TabIndex = 1;
+            // 
+            // listBox1
+            // 
+            listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            listBox1.Font = new Font("Segoe UI", 15F);
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 28;
+            listBox1.Location = new Point(3, 161);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(1085, 340);
+            listBox1.TabIndex = 4;
             // 
             // openFileDialog1
             // 
@@ -326,5 +343,6 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Button button4;
         private Label label4;
+        private Button button5;
     }
 }
