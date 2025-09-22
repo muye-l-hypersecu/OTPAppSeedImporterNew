@@ -136,6 +136,7 @@ namespace OTPAppSeedImporterNew
             }
         }
 
+        // Remove Entry button
         private void button4_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedItem != null && listBox1.SelectedIndex != 0)
@@ -166,5 +167,28 @@ namespace OTPAppSeedImporterNew
             }
         }
 
+
+        // Download Entry button
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (seedFileSelected)
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.Filter = "Text Files (*.txt) | *.txt";
+                dlg.Title = "Save file as";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    StreamWriter writer = new StreamWriter(dlg.FileName);
+
+                    for (int i = 1; i < listBox1.Items.Count; i++)
+                    {
+                        string item = listBox1.Items[i].ToString().Substring(0, 12) + "," + listBox1.Items[i].ToString().Substring(12+NUMBER_OF_SPACES);
+                        writer.WriteLine(item);
+                    }
+                    writer.Close();
+                }
+                dlg.Dispose();
+            }
+        }
     }
 }

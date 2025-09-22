@@ -254,6 +254,7 @@
             button5.TabIndex = 2;
             button5.Text = "Download Entry";
             button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
             // 
             // button4
             // 
