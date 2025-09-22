@@ -56,16 +56,12 @@ namespace OTPAppSeedImporterNew
                 }
                 if (dbDuplicates.Count > 0)
                 {
-                    label6.ForeColor = Color.Red;
-                    label6.Text = $"These serial numbers already exist in the database. Please remove: {duplicate}.";
                 }
                 else
                 {
                     string specId = comboBox1.SelectedItem.ToString();
                     int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
 
-                    label6.ForeColor = Color.Green;
-                    label6.Text = $"{numEntriesSuccess} entries inserted successfully.";
                 }
 
             }
@@ -90,19 +86,15 @@ namespace OTPAppSeedImporterNew
                     numEntriesSuccess = parsedFile.First.Count;
                     if (parsedFile.Second.First > 0)
                     {
-                        label6.ForeColor = Color.Green;
                         if (parsedFile.Second.First == 1)
                         {
-                            label6.Text = "1 invalid entry in the selected seed file has been removed.";
                         }
                         else
                         {
-                            label6.Text = $"{parsedFile.Second.ToString()} invalid entries in the selected seed file have been removed.";
                         }
                     }
                     else
                     {
-                        label6.Text = "";
                     }
                     pictureBox1.Visible = true;
 
@@ -132,7 +124,6 @@ namespace OTPAppSeedImporterNew
                 databasePath = openFileDialog2.FileName;
                 dbFileSelected = true;
                 pictureBox2.Visible = true;
-                label6.Text = "";
             }
         }
 
@@ -142,8 +133,8 @@ namespace OTPAppSeedImporterNew
             SeedEntry entry = new SeedEntry(selectedEntry.Substring(0, 12), selectedEntry.Substring(12 + NUMBER_OF_SPACES));
             //SeedEntry entry = new SeedEntry("862503025416", "1F0A25A0D1109B1C6B36921407C1CC65296BD7BA");
             //label4.Text = $"Removed: { selectedEntry }";
-            label4.Text = parsedFile.First.Contains(entry)? "List contains" : "List not contains";
-            
+            label4.Text = parsedFile.First.Contains(entry) ? "List contains" : "List not contains";
+
             if (parsedFile.First.Contains(entry))
             {
                 parsedFile.First.Remove(entry);
@@ -161,5 +152,19 @@ namespace OTPAppSeedImporterNew
             //label4.Text = show;
         }
 
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
