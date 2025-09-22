@@ -5,6 +5,7 @@ using Utility;
 using Model;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Diagnostics.Eventing.Reader;
 
 namespace OTPAppSeedImporterNew
 {
@@ -47,6 +48,10 @@ namespace OTPAppSeedImporterNew
             {
                 MessageBox.Show("A token spec is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else if (parsedFile.First.Count == 0)
+            {
+                MessageBox.Show("There are no tokens to import to database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             else
             {
                 // Check for duplicates in the database, and if there are any, then display the serial numbers
@@ -76,12 +81,15 @@ namespace OTPAppSeedImporterNew
 
                     if (numEntriesSuccess == 1)
                     {
-                        listBox2.Items.Insert(0, $"SUCCESS: Successfully imported 1 token entriers to the database");
+                        listBox2.Items.Insert(0, $"SUCCESS: Successfully imported 1 token entry to the database");
                     }
                     else
                     {
-                        listBox2.Items.Insert(0, $"SUCCESS: Successfully imported {numEntriesSuccess} token entry to the database");
+                        listBox2.Items.Insert(0, $"SUCCESS: Successfully imported {numEntriesSuccess} token entries to the database");
                     }
+
+                    // Reset the page
+                    ResetPage();
 
                 }
 
@@ -108,8 +116,29 @@ namespace OTPAppSeedImporterNew
 
                     // If there is invalid entries of duplicates in the seed file, display the corresponding messages too
                     listBox2.Items.Insert(0, string.Empty);
-                    if (parsedFile.Second.First > 0) listBox2.Items.Insert(0, $"WARNING: Removed {parsedFile.Second.First} invalid entries from seed file");
-                    if (parsedFile.Second.Second > 0) listBox2.Items.Insert(0, $"WARNING: Removed {parsedFile.Second.Second} duplicates from seed file");
+                    if (parsedFile.Second.First > 0)
+                    {
+                        if (parsedFile.Second.First == 1)
+                        {
+                            listBox2.Items.Insert(0, $"WARNING: Omitted 1 invalid entry from seed file");
+                        }
+                        else
+                        {
+                            listBox2.Items.Insert(0, $"WARNING: Omitted {parsedFile.Second.First} invalid entries from seed file");
+                        }
+                    }
+
+                    if (parsedFile.Second.Second > 0)
+                    {
+                        if (parsedFile.Second.Second == 1)
+                        {
+                            listBox2.Items.Insert(0, $"WARNING: Omitted 1 duplicate from seed file");
+                        }
+                        else
+                        {
+                            listBox2.Items.Insert(0, $"WARNING: Omitted {parsedFile.Second.Second} duplicates from seed file");
+                        }
+                    }
 
                     // Display parsed message. If nothing was parsed, display error message, otherwise display success message
                     if (parsedFile.First.Count > 0)
@@ -125,7 +154,7 @@ namespace OTPAppSeedImporterNew
                     }
                     else
                     {
-                        listBox2.Items.Insert(0, "ERROR: Did not successfully parse any entries");
+                        listBox2.Items.Insert(0, "ERROR: Did not successfully parse any token entries");
                     }
 
 
@@ -165,7 +194,7 @@ namespace OTPAppSeedImporterNew
                 pictureBox2.Visible = true;
 
                 listBox2.Items.Insert(0, string.Empty);
-                listBox2.Items.Insert(0, "SUCCESS: Database successfully imported");
+                listBox2.Items.Insert(0, "SUCCESS: Database successfully connected");
             }
         }
 
@@ -181,7 +210,7 @@ namespace OTPAppSeedImporterNew
                 if (listBox1.SelectedItem is SeedEntry seedEntry)
                 {
                     removeSN = seedEntry.GetSerialNumber();
-                     listContainsBefore = parsedFile.First.Contains(seedEntry);
+                    listContainsBefore = parsedFile.First.Contains(seedEntry);
                     // removes from data
                     parsedFile.First.Remove(seedEntry);
 
@@ -191,6 +220,7 @@ namespace OTPAppSeedImporterNew
                     listContainsAfter = parsedFile.First.Contains(seedEntry);
                 }
 
+                // Display successfully removed message if serial number removed
                 string text = "";
                 if (listContainsBefore && !listContainsAfter)
                 {
@@ -201,6 +231,13 @@ namespace OTPAppSeedImporterNew
                     text = listContainsBefore ? "Remove unsuccessful." : "List doesn't contain the item.";
                 }
                 label4.Text = text;
+
+                // Display warning if there are no entries left.
+                if (parsedFile.First.Count == 0)
+                {
+                    listBox2.Items.Insert(0, string.Empty);
+                    listBox2.Items.Insert(0, "WARNING: There are no serial numbers left to import");
+                }
             }
         }
 
@@ -225,6 +262,29 @@ namespace OTPAppSeedImporterNew
                 }
                 dlg.Dispose();
             }
+        }
+
+        ///// HELPER FUNCTIONS /////
+        
+        // Resets the inputs, except for the bottom listbox message output
+        private void ResetPage()
+        {
+            // Resets the displays
+            label4.Text = string.Empty;
+            label2.Text = "Seed file path";
+            label3.Text = "Database path";
+            pictureBox1.Visible = false;
+            pictureBox2.Visible = false;
+
+            // Resets the boolean indicators
+            seedFileSelected = false;
+            dbFileSelected = false;
+            databasePath = "";
+            comboBox1.SelectedIndex = 0;
+
+            // Wipes the list of seed entries
+            listBox1.Items.Clear();
+
         }
     }
 }

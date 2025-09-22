@@ -272,12 +272,13 @@
             // 
             // label4
             // 
-            label4.Anchor = AnchorStyles.None;
-            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(318, 5);
+            label4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label4.Location = new Point(318, 0);
             label4.Name = "label4";
-            label4.Size = new Size(346, 28);
+            label4.Size = new Size(346, 38);
             label4.TabIndex = 1;
+            label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // listBox1
             // 
