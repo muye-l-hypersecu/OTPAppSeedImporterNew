@@ -14,6 +14,7 @@ namespace OTPAppSeedImporterNew
         private bool seedFileSelected;
         private bool dbFileSelected;
         private string databasePath;
+        private List<string> dbDuplicates;
         private Pair<List<SeedEntry>, Pair<int, int>> parsedFile;
         // number of spaces between SN and seed in listbox
         private const int NUMBER_OF_SPACES = 10;
@@ -55,7 +56,7 @@ namespace OTPAppSeedImporterNew
             else
             {
                 // Check for duplicates in the database, and if there are any, then display the serial numbers
-                List<string> dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
+                dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
                 listBox2.Items.Insert(0, string.Empty);
                 foreach (string dbDuplicate in dbDuplicates)
                 {
@@ -65,6 +66,7 @@ namespace OTPAppSeedImporterNew
                 // If there is at least one duplicate, then display error message. Otherwise, import the database
                 if (dbDuplicates.Count > 0)
                 {
+                    button6.Visible = true;
                     if (dbDuplicates.Count == 1)
                     {
                         listBox2.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which are listed below:");
@@ -289,7 +291,23 @@ namespace OTPAppSeedImporterNew
 
         private void button6_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Are you sure you want to remove duplicates?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            foreach (string duplicate in dbDuplicates)
+            {
+                for (int i = 1; i < listBox1.Items.Count; i++)
+                {
+                    var entry = (SeedEntry)listBox1.Items[i];
+                    if (entry.GetSerialNumber() == duplicate)
+                    {
+                        // removes from data
+                        parsedFile.First.Remove(entry);
 
+                        // removes from UI listbox
+                        listBox1.Items.Remove(listBox1.Items[i]);
+                    }
+                }
+            }
+            button6.Visible = false;
         }
     }
 }

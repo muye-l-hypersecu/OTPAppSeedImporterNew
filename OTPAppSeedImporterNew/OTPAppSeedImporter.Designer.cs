@@ -127,6 +127,7 @@
             button6.TabIndex = 3;
             button6.Text = "Remove Duplicates";
             button6.UseVisualStyleBackColor = false;
+            button6.Visible = false;
             button6.Click += button6_Click;
             // 
             // button5
