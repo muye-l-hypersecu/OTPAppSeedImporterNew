@@ -33,4 +33,9 @@ public class SeedEntry
     {
         return HashCode.Combine(serialNumber, seed);
     }
+
+    public override string ToString()
+    {
+        return $"{serialNumber}          {seed}";
+    }
 }

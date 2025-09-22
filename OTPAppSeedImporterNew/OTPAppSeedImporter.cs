@@ -61,9 +61,10 @@ namespace OTPAppSeedImporterNew
                 if (dbDuplicates.Count > 0)
                 {
                     if (dbDuplicates.Count == 1)
-                    { 
+                    {
                         listBox2.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which are listed below:");
-                    } else
+                    }
+                    else
                     {
                         listBox2.Items.Insert(0, $"ERROR: There are {dbDuplicates.Count} token serial numbers already in the database, which are listed below:");
                     }
@@ -72,11 +73,12 @@ namespace OTPAppSeedImporterNew
                 {
                     string specId = comboBox1.SelectedItem.ToString();
                     int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
-                    
+
                     if (numEntriesSuccess == 1)
                     {
                         listBox2.Items.Insert(0, $"SUCCESS: Successfully imported 1 token entriers to the database");
-                    } else
+                    }
+                    else
                     {
                         listBox2.Items.Insert(0, $"SUCCESS: Successfully imported {numEntriesSuccess} token entry to the database");
                     }
@@ -115,7 +117,8 @@ namespace OTPAppSeedImporterNew
                         if (parsedFile.First.Count == 1)
                         {
                             listBox2.Items.Insert(0, $"SUCCESS: Parsed 1 token entry from seed file");
-                        } else
+                        }
+                        else
                         {
                             listBox2.Items.Insert(0, $"SUCCESS: Parsed {parsedFile.First.Count} token entries from seed file");
                         }
@@ -136,7 +139,8 @@ namespace OTPAppSeedImporterNew
                     // Insert them into listbox entry by entry
                     foreach (SeedEntry entry in parsedFile.First)
                     {
-                        listBox1.Items.Add($"{entry.GetSerialNumber()}          {entry.GetSeed()}");
+                        //listBox1.Items.Add($"{entry.GetSerialNumber()}          {entry.GetSeed()}");
+                        listBox1.Items.Add(new SeedEntry(entry.GetSerialNumber(), entry.GetSeed()));
                     }
                 }
                 catch (Exception ex)
@@ -170,23 +174,27 @@ namespace OTPAppSeedImporterNew
         {
             if (listBox1.SelectedItem != null && listBox1.SelectedIndex != 0)
             {
-                string selectedEntry = listBox1.SelectedItem.ToString();
-                SeedEntry entry = new SeedEntry(selectedEntry.Substring(0, 12), selectedEntry.Substring(12 + NUMBER_OF_SPACES));
-                bool listContainsBefore = parsedFile.First.Contains(entry);
+                bool listContainsBefore = false;
+                bool listContainsAfter = false;
+                string removeSN = "";
 
-                // Removes from the list of SeedEntry
-                if (parsedFile.First.Contains(entry))
+                if (listBox1.SelectedItem is SeedEntry seedEntry)
                 {
-                    parsedFile.First.Remove(entry);
-                }
-                // Removes from listbox
-                listBox1.Items.Remove(listBox1.SelectedItem);
+                    removeSN = seedEntry.GetSerialNumber();
+                     listContainsBefore = parsedFile.First.Contains(seedEntry);
+                    // removes from data
+                    parsedFile.First.Remove(seedEntry);
 
-                bool listContainsAfter = parsedFile.First.Contains(entry);
+                    // removes from UI listbox
+                    listBox1.Items.Remove(listBox1.SelectedItem);
+
+                    listContainsAfter = parsedFile.First.Contains(seedEntry);
+                }
+
                 string text = "";
                 if (listContainsBefore && !listContainsAfter)
                 {
-                    text = "Successfully removed.";
+                    text = $"Successfully removed Serial Number: {removeSN}";
                 }
                 else
                 {
@@ -195,7 +203,6 @@ namespace OTPAppSeedImporterNew
                 label4.Text = text;
             }
         }
-
 
         // Download Entry button
         private void button5_Click(object sender, EventArgs e)
@@ -211,28 +218,13 @@ namespace OTPAppSeedImporterNew
 
                     for (int i = 1; i < listBox1.Items.Count; i++)
                     {
-                        string item = listBox1.Items[i].ToString().Substring(0, 12) + "," + listBox1.Items[i].ToString().Substring(12 + NUMBER_OF_SPACES);
-                        writer.WriteLine(item);
+                        var entry = (SeedEntry)listBox1.Items[i];
+                        writer.WriteLine($"{entry.GetSerialNumber()},{entry.GetSeed()}");
                     }
                     writer.Close();
                 }
                 dlg.Dispose();
             }
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
