@@ -270,40 +270,44 @@ namespace OTPAppSeedImporterNew
         private void button6_Click(object sender, EventArgs e)
         {
             // Get confirmation message and remove duplicates. Also make the button invisible
-            MessageBox.Show("Are you sure you want to remove duplicates?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            foreach (string duplicate in dbDuplicates)
+            var confirmationMessage = MessageBox.Show("Are you sure you want to remove duplicates?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmationMessage == DialogResult.Yes)
             {
-                for (int i = 1; i < listBox1.Items.Count; i++)
+                foreach (string duplicate in dbDuplicates)
                 {
-                    var entry = (SeedEntry)listBox1.Items[i];
-                    if (entry.GetSerialNumber() == duplicate)
+                    for (int i = 1; i < listBox1.Items.Count; i++)
                     {
-                        // removes from data
-                        parsedFile.First.Remove(entry);
+                        var entry = (SeedEntry)listBox1.Items[i];
+                        if (entry.GetSerialNumber() == duplicate)
+                        {
+                            // removes from data
+                            parsedFile.First.Remove(entry);
 
-                        // removes from UI listbox
-                        listBox1.Items.Remove(listBox1.Items[i]);
+                            // removes from UI listbox
+                            listBox1.Items.Remove(listBox1.Items[i]);
+                        }
                     }
                 }
-            }
-            button6.Visible = false;
+                button6.Visible = false;
 
-            // Add a log to the output
-            listBox2.Items.Insert(0, string.Empty);
-            if (dbDuplicates.Count == 1)
-            {
-                listBox2.Items.Insert(0, $"SUCCESS: Removed 1 token entry");
-            } else
-            {
-                listBox2.Items.Insert(0, $"SUCCESS: Removed {dbDuplicates.Count} token entries");
-            }
+                // Add a log to the output
+                listBox2.Items.Insert(0, string.Empty);
+                if (dbDuplicates.Count == 1)
+                {
+                    listBox2.Items.Insert(0, $"SUCCESS: Removed 1 token entry");
+                }
+                else
+                {
+                    listBox2.Items.Insert(0, $"SUCCESS: Removed {dbDuplicates.Count} token entries");
+                }
 
-            // Display warning if there are no entries left.
-            if (parsedFile.First.Count == 0)
-            {
-                listBox2.Items.Insert(0, "WARNING: There are no serial numbers left to import");
+                // Display warning if there are no entries left.
+                if (parsedFile.First.Count == 0)
+                {
+                    listBox2.Items.Insert(0, "WARNING: There are no serial numbers left to import");
+                }
             }
-
+            
         }
 
         ///// HELPER FUNCTIONS /////
