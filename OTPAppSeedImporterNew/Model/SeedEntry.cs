@@ -19,4 +19,18 @@ public class SeedEntry
 
     public string GetSerialNumber() { return serialNumber; }
     public string GetSeed() { return seed; }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is SeedEntry other)
+        {
+            return this.serialNumber == other.serialNumber && this.seed == other.seed;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(serialNumber, seed);
+    }
 }

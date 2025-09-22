@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Utility;
 using Model;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace OTPAppSeedImporterNew
 {
@@ -14,6 +15,8 @@ namespace OTPAppSeedImporterNew
         private string databasePath;
         private int numEntriesSuccess;
         private Pair<List<SeedEntry>, Pair<int, int>> parsedFile;
+        // number of spaces between SN and seed in listbox
+        private const int NUMBER_OF_SPACES = 10;
         public OTPAppSeedImporter()
         {
             InitializeComponent();
@@ -107,7 +110,7 @@ namespace OTPAppSeedImporterNew
 
                     foreach (SeedEntry entry in parsedFile.First)
                     {
-                        listBox1.Items.Add($"{entry.GetSerialNumber()}\t {entry.GetSeed()}");
+                        listBox1.Items.Add($"{entry.GetSerialNumber()}          {entry.GetSeed()}");
                     }
                 }
                 catch (Exception ex)
@@ -135,12 +138,27 @@ namespace OTPAppSeedImporterNew
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string selectedSn = listBox1.SelectedItem.ToString();
-            listBox1.Items.Remove(listBox1.SelectedItem);
-            if (selectedSn.Length > 11 && parsedFile.First.Contains(selectedSn.Substring(0, 12)))
+            string selectedEntry = listBox1.SelectedItem.ToString();
+            SeedEntry entry = new SeedEntry(selectedEntry.Substring(0, 12), selectedEntry.Substring(12 + NUMBER_OF_SPACES));
+            //SeedEntry entry = new SeedEntry("862503025416", "1F0A25A0D1109B1C6B36921407C1CC65296BD7BA");
+            //label4.Text = $"Removed: { selectedEntry }";
+            label4.Text = parsedFile.First.Contains(entry)? "List contains" : "List not contains";
+            
+            if (parsedFile.First.Contains(entry))
             {
-
+                parsedFile.First.Remove(entry);
             }
+            listBox1.Items.Remove(listBox1.SelectedItem);
+
+
+
+            // Test to see if selectedItem is removed from the list
+            //string show = "";
+            //foreach(SeedEntry se in parsedFile.First)
+            //{
+            //    show += se.GetSerialNumber();
+            //}
+            //label4.Text = show;
         }
 
     }

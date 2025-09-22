@@ -45,6 +45,7 @@
             listBox1 = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             button4 = new Button();
+            label4 = new Label();
             openFileDialog1 = new OpenFileDialog();
             openFileDialog2 = new OpenFileDialog();
             tableLayoutPanel4.SuspendLayout();
@@ -243,6 +244,7 @@
             // 
             flowLayoutPanel1.Anchor = AnchorStyles.None;
             flowLayoutPanel1.Controls.Add(button4);
+            flowLayoutPanel1.Controls.Add(label4);
             flowLayoutPanel1.Location = new Point(0, 625);
             flowLayoutPanel1.Margin = new Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -264,6 +266,14 @@
             button4.Text = "Remove Entry";
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.None;
+            label4.Location = new Point(138, 2);
+            label4.Name = "label4";
+            label4.Size = new Size(486, 28);
+            label4.TabIndex = 1;
             // 
             // openFileDialog1
             // 
@@ -315,5 +325,6 @@
         private PictureBox pictureBox2;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button button4;
+        private Label label4;
     }
 }
