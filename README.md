@@ -19,9 +19,22 @@ Create a text file with serial numbers and seeds each separated by a comma.
 - A serial number and seed separated by a comma without any spaces
 - One entry per line
 
+### 4. Built in error checking 
+- Does not allow users to input files that are the wrong format (i.e. seed file must be .txt, database file must be an SQLite .db file);
+- Will fail to insert if there are duplicates, and will request the user to remove the duplicates from the inported seed list first.
+- If schema is not created yet, it will first create it on the database.
+- If the seed file contains duplicates or invalid row entries, they will automatically be removed from the parsed seed file output.
+- Will only proceed if the files, and token type have been selected. If not, then it will show an error message.
+
+### 5. User interface
+- Displays file paths for .txt seed file and .db database file after they have been connected to the application.
+- Displays all the token serial numbers and seeds that have been successfully parsed.
+- Includes buttons to delete single token serial number, or to remove all the duplicates that are found in the database.
+- Allows users to download all the successfully token serial numbers and seeds again.
+
 ## Resources
 - Windows Forms
 - C#
 - OTPAppSeedImporter (Daniel's version)
 
-Authors: Mu-Ye, Sakura
+Authors: Mu Ye, Sakura
