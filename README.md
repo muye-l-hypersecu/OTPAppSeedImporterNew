@@ -37,4 +37,18 @@ Create a text file with serial numbers and seeds each separated by a comma.
 - C#
 - OTPAppSeedImporter (Daniel's version)
 
+
+## Setup Instructions: 
+
+### Required software: 
+- Visual Studio 2022 with WinForms installed
+- DB Browser for SQLite
+- .db file (empty is fine)
+
+### Instructions
+1. Clone the project
+2. Load it in Visual Studio
+3. Build the project first, either by clicking on the solution and building it, or by typing ```dotnet build``` in the terimal.
+4. Run the project by clicking on run button, or by typing ```dotnet run``` in terminal.
+
 Authors: Mu Ye, Sakura
