@@ -266,6 +266,7 @@
             pictureBox2.Location = new Point(928, 50);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(39, 41);
+            pictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox2.TabIndex = 5;
             pictureBox2.TabStop = false;
             pictureBox2.Visible = false;
@@ -325,6 +326,7 @@
             pictureBox1.Location = new Point(928, 3);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(39, 41);
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
             pictureBox1.Visible = false;
@@ -358,6 +360,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(984, 661);
             Controls.Add(tableLayoutPanel4);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1000, 700);
             Name = "OTPAppSeedImporter";
             Text = "OTPAppSeedImporter";
