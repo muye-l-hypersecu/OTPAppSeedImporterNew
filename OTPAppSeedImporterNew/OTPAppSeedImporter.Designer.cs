@@ -211,7 +211,7 @@
             titleFlowLayoutPanel.Location = new Point(0, 3);
             titleFlowLayoutPanel.Margin = new Padding(0, 3, 0, 0);
             titleFlowLayoutPanel.Name = "titleFlowLayoutPanel";
-            titleFlowLayoutPanel.Size = new Size(416, 50);
+            titleFlowLayoutPanel.Size = new Size(398, 50);
             titleFlowLayoutPanel.TabIndex = 3;
             // 
             // hypersecuLogoPictureBox
@@ -229,11 +229,11 @@
             // 
             label1.Anchor = AnchorStyles.Left;
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(0, 146, 188);
             label1.Location = new Point(73, 9);
             label1.Name = "label1";
-            label1.Size = new Size(340, 32);
+            label1.Size = new Size(322, 32);
             label1.TabIndex = 0;
             label1.Text = "OTP App Seed Importer 2.1.0";
             label1.TextAlign = ContentAlignment.MiddleLeft;
