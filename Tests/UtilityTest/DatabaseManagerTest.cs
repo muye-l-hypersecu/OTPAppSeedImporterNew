@@ -32,18 +32,25 @@ public class DatabaseManagerTest
             DatabaseManager.InitializeDatabase(sampleDbWithoutTablesFilePath);
             Assert.IsTrue(DatabaseProperlyInstantiated(sampleDbWithoutTablesFilePath));
 
+            // Check to see that the ft_tokenspec table is initialized properly
+            using var connCheck = new SQLiteConnection($"Data Source={sampleDbWithoutTablesFilePath}");
+            connCheck.Open();
+            string sqlCheck = "SELECT COUNT(*) FROM ft_tokenspec;";
+            using var cmdCheck = new SQLiteCommand(sqlCheck, connCheck);
+
+            Assert.That(Convert.ToInt32(cmdCheck.ExecuteScalar()), Is.EqualTo(3));
+
             // Delete the tables to ensure that the test can run consecutively
+
             using var connDelete = new SQLiteConnection($"Data Source={sampleDbWithoutTablesFilePath}");
             connDelete.Open();
-            string sqlTokenSpecDelete = "DROP TABLE tokenSpec;";
-
+            string sqlTokenSpecDelete = "DROP TABLE ft_tokenspec;";
             using var tokenSpecDelete = new SQLiteCommand(sqlTokenSpecDelete, connDelete);
             tokenSpecDelete.ExecuteNonQuery();
-
-            string sqlTokenInfoDelete = "DROP TABLE tokenInfo;";
-
+            string sqlTokenInfoDelete = "DROP TABLE ft_tokeninfo;";
             using var tokenInfoDelete = new SQLiteCommand(sqlTokenInfoDelete, connDelete);
             tokenInfoDelete.ExecuteNonQuery();
+            
         } catch (FileNotFoundException)
         {
             Assert.Fail();
@@ -57,10 +64,10 @@ public class DatabaseManagerTest
 
             using var connCheck = new SQLiteConnection($"Data Source={sampleDBWithTablesFilePath}");
             connCheck.Open();
-            string sqlCheck = "SELECT COUNT(*) FROM tokenSpec;";
+            string sqlCheck = "SELECT COUNT(*) FROM ft_tokenspec;";
             using var cmdCheck = new SQLiteCommand(sqlCheck, connCheck);
 
-            Assert.That(Convert.ToInt32(cmdCheck.ExecuteScalar()), Is.EqualTo(4));
+            Assert.That(Convert.ToInt32(cmdCheck.ExecuteScalar()), Is.EqualTo(3));
         }
         catch (FileNotFoundException)
         {
@@ -85,11 +92,11 @@ public class DatabaseManagerTest
         string seedFilePath = "../../../SampleSeedFiles/sample_seeds_all_valid.txt";
         Pair<List<SeedEntry>, Pair<int, int>> entries = await SeedFileParser.ParseSeedFile(seedFilePath);
 
-        // Should successfully insert 3 rows into the tokenInfo table
+        // Should successfully insert 4 rows into the tokenInfo table
         try
         {
             int numberInserted = DatabaseManager.InsertSeedEntries(sampleDBWithTablesFilePath, entries.First, SpecTypeExtensions.ToSpecId(SpecType.TOTP30));
-            Assert.That(numberInserted, Is.EqualTo(3));
+            Assert.That(numberInserted, Is.EqualTo(4));
         }
         catch (InvalidOperationException)
         {
@@ -136,7 +143,7 @@ public class DatabaseManagerTest
         using var connection = new SQLiteConnection($"Data Source={dbPath}");
         connection.Open();
 
-        string[] requiredTables = { "tokenInfo", "tokenSpec" };
+        string[] requiredTables = { "ft_tokenspec", "ft_tokeninfo" };
 
         foreach (string requiredTable in requiredTables)
         {
@@ -160,7 +167,7 @@ public class DatabaseManagerTest
     /// </summary>
     private void ClearTokenInfoTable()
     {
-        string sqlDelete = "DELETE FROM tokenInfo;";
+        string sqlDelete = "DELETE FROM ft_tokeninfo;";
         using var connDelete = new SQLiteConnection($"Data Source={sampleDBWithTablesFilePath}");
         connDelete.Open();
         using var cmdDelete = connDelete.CreateCommand();

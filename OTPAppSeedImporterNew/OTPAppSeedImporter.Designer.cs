@@ -38,6 +38,8 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             button1 = new Button();
             comboBox1 = new ComboBox();
+            titleFlowLayoutPanel = new FlowLayoutPanel();
+            hypersecuLogoPictureBox = new PictureBox();
             label1 = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             pictureBox2 = new PictureBox();
@@ -53,6 +55,8 @@
             tableLayoutPanel4.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            titleFlowLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)hypersecuLogoPictureBox).BeginInit();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -164,7 +168,7 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
             tableLayoutPanel1.Controls.Add(button1, 2, 0);
             tableLayoutPanel1.Controls.Add(comboBox1, 1, 0);
-            tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(titleFlowLayoutPanel, 0, 0);
             tableLayoutPanel1.Location = new Point(3, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
@@ -199,17 +203,39 @@
             comboBox1.TabIndex = 2;
             comboBox1.Tag = "";
             // 
+            // titleFlowLayoutPanel
+            // 
+            titleFlowLayoutPanel.AutoSize = true;
+            titleFlowLayoutPanel.Controls.Add(hypersecuLogoPictureBox);
+            titleFlowLayoutPanel.Controls.Add(label1);
+            titleFlowLayoutPanel.Location = new Point(0, 3);
+            titleFlowLayoutPanel.Margin = new Padding(0, 3, 0, 0);
+            titleFlowLayoutPanel.Name = "titleFlowLayoutPanel";
+            titleFlowLayoutPanel.Size = new Size(416, 50);
+            titleFlowLayoutPanel.TabIndex = 3;
+            // 
+            // hypersecuLogoPictureBox
+            // 
+            hypersecuLogoPictureBox.Image = (Image)resources.GetObject("hypersecuLogoPictureBox.Image");
+            hypersecuLogoPictureBox.Location = new Point(10, 0);
+            hypersecuLogoPictureBox.Margin = new Padding(10, 0, 10, 0);
+            hypersecuLogoPictureBox.Name = "hypersecuLogoPictureBox";
+            hypersecuLogoPictureBox.Size = new Size(50, 50);
+            hypersecuLogoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            hypersecuLogoPictureBox.TabIndex = 0;
+            hypersecuLogoPictureBox.TabStop = false;
+            // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Left;
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = SystemColors.Highlight;
-            label1.Location = new Point(3, 12);
+            label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(0, 146, 188);
+            label1.Location = new Point(73, 9);
             label1.Name = "label1";
-            label1.Size = new Size(488, 32);
+            label1.Size = new Size(340, 32);
             label1.TabIndex = 0;
-            label1.Text = "OTPAppSeedImporter by Mu Ye and Sakura";
+            label1.Text = "OTP App Seed Importer 2.1.0";
             label1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel2
@@ -348,6 +374,9 @@
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            titleFlowLayoutPanel.ResumeLayout(false);
+            titleFlowLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)hypersecuLogoPictureBox).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -378,5 +407,7 @@
         private Button button5;
         private Button button6;
         private TableLayoutPanel tableLayoutPanel3;
+        private FlowLayoutPanel titleFlowLayoutPanel;
+        private PictureBox hypersecuLogoPictureBox;
     }
 }

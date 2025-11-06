@@ -1,7 +1,7 @@
 -- Creates the table for the token spec
 CREATE TABLE IF NOT EXISTS ft_tokeninfo (
-	serialNumber INTEGER PRIMARY KEY,
-	seed VARCHAR(64) NOT NULL,
+	serialNumber VARCHAR(20) PRIMARY KEY,
+	seed VARCHAR(128) NOT NULL,
 	specId VARCHAR(6) NOT NULL,
 	importTime DATETIME DEFAULT (datetime('now', 'localtime')),
 	FOREIGN KEY (specID) REFERENCES tokenSpec(specID) ON DELETE CASCADE ON UPDATE CASCADE
