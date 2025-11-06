@@ -326,14 +326,6 @@
             listBox2.Size = new Size(970, 106);
             listBox2.TabIndex = 6;
             // 
-            // openFileDialog1
-            // 
-            openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // openFileDialog2
-            // 
-            openFileDialog2.FileName = "openFileDialog2";
-            // 
             // OTPAppSeedImporter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);

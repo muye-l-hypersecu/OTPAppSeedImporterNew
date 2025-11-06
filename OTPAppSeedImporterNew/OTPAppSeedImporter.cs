@@ -102,14 +102,14 @@ namespace OTPAppSeedImporterNew
         // Select a seed file button
         private async void button2_Click(object sender, EventArgs e)
         {
-            // only text files accepted
-            openFileDialog1.Filter = "Text files (*.txt)|*.txt";
+            openFileDialog1.Filter = "Text files (*.txt)|*.txt|All Files (*.*)|*.*";
+            openFileDialog1.FileName = "";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    // If successful, update and display database path
+                    // If successful, update and display file path
                     label2.Text = openFileDialog1.FileName;
                     seedFileSelected = true;
 
@@ -184,8 +184,8 @@ namespace OTPAppSeedImporterNew
         // Select database button
         private void button3_Click(object sender, EventArgs e)
         {
-            // only text files accepted
-            openFileDialog2.Filter = "Text files (*.db)|*.db";
+            openFileDialog2.Filter = "Text files (*.db)|*.db|All Files (*.*)|*.*";
+            openFileDialog2.FileName = "";
 
             if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {
