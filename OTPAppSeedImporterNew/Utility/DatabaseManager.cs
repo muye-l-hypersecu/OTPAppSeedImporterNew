@@ -47,7 +47,7 @@ public static class DatabaseManager
 
 		// prepares for insertion
 		using var command = connection.CreateCommand();
-		command.CommandText = @"INSERT INTO tokeninfo (serialNumber, seed, specId) " +
+		command.CommandText = @"INSERT INTO ft_tokeninfo (serialNumber, seed, specId) " +
                             "VALUES (@serialNumber, @seed, @specId)";
 
 		int numberEntries = 0;
@@ -80,7 +80,7 @@ public static class DatabaseManager
 
 		// A query to check the existing serialNumber
 		using var command = connection.CreateCommand();
-		command.CommandText = "SELECT serialNumber FROM tokeninfo WHERE serialNumber = @serialNumber";
+		command.CommandText = "SELECT serialNumber FROM ft_tokeninfo WHERE serialNumber = @serialNumber";
 		var tokenParam = command.Parameters.Add("@serialNumber", System.Data.DbType.String);
 
 		foreach (var entry in entries)
@@ -103,7 +103,7 @@ public static class DatabaseManager
 		try
 		{
 			var cmd = connection.CreateCommand();
-			cmd.CommandText = "SELECT COUNT(*) FROM tokenspec WHERE specid = @specid";
+			cmd.CommandText = "SELECT COUNT(*) FROM ft_tokenspec WHERE specid = @specid";
 			cmd.Parameters.AddWithValue("@specid", specId);
 
 			var count = Convert.ToInt32(cmd.ExecuteScalar());

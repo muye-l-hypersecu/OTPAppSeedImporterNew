@@ -35,8 +35,7 @@ public static class SeedFileParser
             //        - Seed must be 0-9a-fA-F
             //        - Seed must be between 20-64 characters long
             //        - Seed must be an even number
-            bool valid = value.Length == 2 && Regex.IsMatch(value[0], @"^\d+$") && Regex.IsMatch(value[1], @"^[0-9a-f]+$", RegexOptions.IgnoreCase) &&
-                value[1].Length >= 20 && value[1].Length <= 64 && value[1].Length % 2 == 0;
+            bool valid = value.Length == 2 && Regex.IsMatch(value[0], @"^[0-9a-z]+$", RegexOptions.IgnoreCase) && Regex.IsMatch(value[1], @"^[0-9a-f]+$", RegexOptions.IgnoreCase) && value[1].Length >= 40 && value[1].Length <= 128 && value[1].Length % 2 == 0;
             if (!valid)
             {
                 noInvalid++;

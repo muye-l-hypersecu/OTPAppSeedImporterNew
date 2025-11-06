@@ -32,7 +32,7 @@ OTP App seed importer new version in C# and WinForms framework
 ## Seed File Format
 Create a text file with serial numbers and seeds each separated by a comma. 
 #### Format Requirements:
-- **Serial Number**: Must be in numerical format.  
+- **Serial Number**: Must be in alphanumerical format
 - **Seeds**: Must meet the following requirements:
 	- In hexadecimal format (a-f, A-F, 0-9), case insensitive.
 	- Between 20 to 64 characters long (inclusive).
@@ -46,6 +46,7 @@ Example .txt file format:
 862503025416,AE7AB67157F90B1935B8E7979BAE30FB8C6EA5E5
 123456789012,1234567890ABCDEF1234567890ABCDEF12345678
 987654321098,FEDCBA0987654321FEDCBA0987654321FEDCBA09
+FTK21041KN07,321FEDCBA0987654321FEDCBA09FEDCBA0987654
 ```
 
 

@@ -83,11 +83,11 @@ namespace OTPAppSeedImporterNew
 
                     if (numEntriesSuccess == 1)
                     {
-                        listBox2.Items.Insert(0, $"SUCCESS: Successfully imported 1 token entry to the database");
+                        listBox2.Items.Insert(0, $"SUCCESS: Imported 1 token entry to the database");
                     }
                     else
                     {
-                        listBox2.Items.Insert(0, $"SUCCESS: Successfully imported {numEntriesSuccess} token entries to the database");
+                        listBox2.Items.Insert(0, $"SUCCESS: Imported {numEntriesSuccess} token entries to the database");
                     }
 
                     // Reset the page
@@ -156,7 +156,7 @@ namespace OTPAppSeedImporterNew
                     }
                     else
                     {
-                        listBox2.Items.Insert(0, "ERROR: Did not successfully parse any token entries");
+                        listBox2.Items.Insert(0, "ERROR: Did not parse any token entries");
                     }
 
 
@@ -196,7 +196,7 @@ namespace OTPAppSeedImporterNew
                 pictureBox2.Visible = true;
 
                 listBox2.Items.Insert(0, string.Empty);
-                listBox2.Items.Insert(0, "SUCCESS: Database successfully connected");
+                listBox2.Items.Insert(0, "SUCCESS: Database connected");
             }
         }
 
@@ -307,7 +307,7 @@ namespace OTPAppSeedImporterNew
                     listBox2.Items.Insert(0, "WARNING: There are no serial numbers left to import");
                 }
             }
-            
+
         }
 
         ///// HELPER FUNCTIONS /////
