@@ -295,14 +295,7 @@ namespace OTPAppSeedImporterNew
 
                 // Add a log to the output
                 outputLogListBox.Items.Insert(0, string.Empty);
-                if (dbDuplicates.Count == 1)
-                {
-                    outputLogListBox.Items.Insert(0, $"SUCCESS: Removed 1 token entry.");
-                }
-                else
-                {
-                    outputLogListBox.Items.Insert(0, $"SUCCESS: Removed {dbDuplicates.Count} token entries.");
-                }
+                outputLogListBox.Items.Insert(0, "SUCCESS: Removed duplicate token entries.");
 
                 // Display warning if there are no entries left.
                 if (parsedFile.First.Count == 0)

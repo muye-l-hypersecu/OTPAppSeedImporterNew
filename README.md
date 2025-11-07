@@ -11,7 +11,7 @@ OTP App seed importer new version in C# and WinForms framework
 ## Features:
 
 ### Main purpose: 
-- Import token serial numbers and seeds from .txt file into an SQLite database.
+- Import token serial numbers and seeds from text-based file into an SQLite database.
 
 ### Application type:
 - WinForms C# application.
@@ -23,19 +23,19 @@ OTP App seed importer new version in C# and WinForms framework
 - Allows users to download all the successfully token serial numbers and seeds again.
 
 ### Built in error checking:
-- Does not allow users to input files that are the wrong format (i.e. seed file must be .txt, database file must be an SQLite .db file);
+- Does not allow users to input files that are the wrong format (i.e. seed file must be text-based, database file must be an SQLite compatible file);
 - Will fail to insert if there are duplicates, and will request the user to remove the duplicates from the inported seed list first.
 - If schema is not created yet, it will first create it on the database.
 - If the seed file contains duplicates or invalid row entries, they will automatically be removed from the parsed seed file output.
 - Will only proceed if the files, and token type have been selected. If not, then it will show an error message.
 
 ## Seed File Format
-Create a text file with serial numbers and seeds each separated by a comma. 
+Create a text-based file with serial numbers and seeds each separated by a comma. 
 #### Format Requirements:
 - **Serial Number**: Must be in alphanumerical format
 - **Seeds**: Must meet the following requirements:
 	- In hexadecimal format (a-f, A-F, 0-9), case insensitive.
-	- Between 20 to 64 characters long (inclusive).
+	- Between 40 to 128 characters long (inclusive).
 	- Even length.
 - Format: ```Serial_Number```,```Seed``` 
 	- No spaces allowed at all (or else it will see the entry as invalid)
@@ -57,8 +57,8 @@ FTK21041KN07,321FEDCBA0987654321FEDCBA09FEDCBA0987654
 
 ### Required software: 
 - Visual Studio 2022 with WinForms and .NET 8.0 or newer installed
-- DB Browser for sqlite to create .db file.
-- .db file (empty is fine, as the program will automatically create the schema for you if it doesn't exist yet)
+- DB Browser for SQLite.
+- .db file or another SQLite compatible database file (empty is fine, as the program will automatically create the schema for you if it doesn't exist yet)
 
 ### Instructions:
 1. Clone the project
@@ -68,21 +68,21 @@ FTK21041KN07,321FEDCBA0987654321FEDCBA09FEDCBA0987654
 
 ## Database specifications: 
 
-This project utilizes an SQLite ```.db``` file with 2 tables to store token info. The SQL queries to create the tables, as well as the specifications for each attribute are listed below.
+This project utilizes an SQLite compatible database file with 2 tables to store token info. The SQL queries to create the tables, as well as the specifications for each attribute are listed below.
 
-The SQL queries to create these tables will run only if it doesn't exist in the database. If the table exists already, it will remain unchanged, eliminating the requirement of needing to manually create the tables in the ```.db``` file beforehand.
+The SQL queries to create these tables will run only if it doesn't exist in the database. If the table exists already, it will remain unchanged, eliminating the requirement of needing to manually create the tables in the database file beforehand.
 
 **Note: You do not need to manually execute the sql tables to initialize database. The program will do if for you if it hasn't been initialized yet.**
 
 **Query that creates the table storing token info:**
 
 ```sql
-CREATE TABLE IF NOT EXISTS tokenInfo (
-	serialNumber INTEGER PRIMARY KEY,
-	seed VARCHAR(64) NOT NULL,
+CREATE TABLE IF NOT EXISTS ft_tokeninfo (
+	serialNumber VARCHAR(20),
+	seed VARCHAR(128) NOT NULL,
 	specId VARCHAR(6) NOT NULL,
 	importTime DATETIME DEFAULT (datetime('now', 'localtime')),
-	FOREIGN KEY (specID) REFERENCES tokenSpec(specID) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (specID) REFERENCES ft_tokenspec(specID) ON DELETE CASCADE ON UPDATE CASCADE
  );
 ```
 
@@ -99,7 +99,7 @@ Specifications of attributes:
 
 ```sql
  Creates the table for the token info
- CREATE TABLE IF NOT EXISTS tokenSpec (
+ CREATE TABLE IF NOT EXISTS ft_tokenspec (
 	specId VARCHAR(6) PRIMARY KEY,
 	intervalLength INTEGER
  );
@@ -115,7 +115,7 @@ Specifications of attributes:
 **Query to import the token specs at the beginning (if haven't done so yet):**
 
 ```sql
- INSERT OR IGNORE INTO tokenSpec(specId, intervalLength) VALUES 
+ INSERT OR IGNORE INTO ft_tokenspec(specId, intervalLength) VALUES 
 	("TOTP30", 30),
 	("TOTP60", 60),
 	("HOTP", 0);
