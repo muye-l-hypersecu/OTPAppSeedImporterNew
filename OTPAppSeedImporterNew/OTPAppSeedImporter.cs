@@ -247,7 +247,7 @@ namespace OTPAppSeedImporterNew
                     {
                         string serialNumber = row.Text;
                         string seed = row.SubItems[1].Text;
-                        writer.Write($"{serialNumber},{seed}");
+                        writer.WriteLine($"{serialNumber},{seed}");
                     }
                     writer.Close();
                 }
