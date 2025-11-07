@@ -36,11 +36,11 @@
             button5 = new Button();
             label4 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
-            button1 = new Button();
-            comboBox1 = new ComboBox();
+            importToDatabaseButton = new Button();
+            specComboBox = new ComboBox();
             titleFlowLayoutPanel = new FlowLayoutPanel();
             hypersecuLogoPictureBox = new PictureBox();
-            label1 = new Label();
+            titleLabel = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             pictureBox2 = new PictureBox();
             button2 = new Button();
@@ -48,8 +48,8 @@
             label2 = new Label();
             label3 = new Label();
             pictureBox1 = new PictureBox();
-            listBox1 = new ListBox();
-            listBox2 = new ListBox();
+            outputLogListBox = new ListBox();
+            entriesListView = new ListView();
             openFileDialog1 = new OpenFileDialog();
             openFileDialog2 = new OpenFileDialog();
             tableLayoutPanel4.SuspendLayout();
@@ -70,8 +70,8 @@
             tableLayoutPanel4.Controls.Add(tableLayoutPanel3, 0, 4);
             tableLayoutPanel4.Controls.Add(tableLayoutPanel1, 0, 0);
             tableLayoutPanel4.Controls.Add(tableLayoutPanel2, 0, 1);
-            tableLayoutPanel4.Controls.Add(listBox1, 0, 2);
-            tableLayoutPanel4.Controls.Add(listBox2, 0, 3);
+            tableLayoutPanel4.Controls.Add(outputLogListBox, 0, 3);
+            tableLayoutPanel4.Controls.Add(entriesListView, 0, 2);
             tableLayoutPanel4.Location = new Point(3, 8);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 5;
@@ -87,8 +87,8 @@
             // 
             tableLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel3.ColumnCount = 4;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 170F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 146F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 178F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 159F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
             tableLayoutPanel3.Controls.Add(button4, 1, 0);
@@ -105,16 +105,17 @@
             // button4
             // 
             button4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            button4.AutoSize = true;
             button4.BackColor = Color.Red;
             button4.FlatAppearance.BorderSize = 0;
             button4.FlatStyle = FlatStyle.Popup;
             button4.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             button4.ForeColor = SystemColors.Control;
-            button4.Location = new Point(173, 3);
+            button4.Location = new Point(181, 3);
             button4.Name = "button4";
-            button4.Size = new Size(140, 34);
+            button4.Size = new Size(153, 34);
             button4.TabIndex = 0;
-            button4.Text = "Remove Entry";
+            button4.Text = "Remove Entries";
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
             // 
@@ -143,9 +144,9 @@
             button5.ForeColor = SystemColors.Control;
             button5.Location = new Point(3, 3);
             button5.Name = "button5";
-            button5.Size = new Size(164, 34);
+            button5.Size = new Size(172, 34);
             button5.TabIndex = 2;
-            button5.Text = "Download Entry";
+            button5.Text = "Download Entries";
             button5.UseVisualStyleBackColor = false;
             button5.Click += button5_Click;
             // 
@@ -153,9 +154,9 @@
             // 
             label4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label4.Location = new Point(319, 0);
+            label4.Location = new Point(340, 0);
             label4.Name = "label4";
-            label4.Size = new Size(448, 40);
+            label4.Size = new Size(427, 40);
             label4.TabIndex = 1;
             label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -166,8 +167,8 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 225F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
-            tableLayoutPanel1.Controls.Add(button1, 2, 0);
-            tableLayoutPanel1.Controls.Add(comboBox1, 1, 0);
+            tableLayoutPanel1.Controls.Add(importToDatabaseButton, 2, 0);
+            tableLayoutPanel1.Controls.Add(specComboBox, 1, 0);
             tableLayoutPanel1.Controls.Add(titleFlowLayoutPanel, 0, 0);
             tableLayoutPanel1.Location = new Point(3, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -176,38 +177,38 @@
             tableLayoutPanel1.Size = new Size(970, 56);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // button1
+            // importToDatabaseButton
             // 
-            button1.Anchor = AnchorStyles.None;
-            button1.BackColor = SystemColors.ControlLightLight;
-            button1.Font = new Font("Segoe UI", 15F);
-            button1.ForeColor = SystemColors.ControlText;
-            button1.Location = new Point(773, 6);
-            button1.Name = "button1";
-            button1.Size = new Size(194, 44);
-            button1.TabIndex = 1;
-            button1.Text = "Import to database";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            importToDatabaseButton.Anchor = AnchorStyles.None;
+            importToDatabaseButton.BackColor = SystemColors.ControlLightLight;
+            importToDatabaseButton.Font = new Font("Segoe UI", 15F);
+            importToDatabaseButton.ForeColor = SystemColors.ControlText;
+            importToDatabaseButton.Location = new Point(773, 6);
+            importToDatabaseButton.Name = "importToDatabaseButton";
+            importToDatabaseButton.Size = new Size(194, 44);
+            importToDatabaseButton.TabIndex = 1;
+            importToDatabaseButton.Text = "Import to database";
+            importToDatabaseButton.UseVisualStyleBackColor = false;
+            importToDatabaseButton.Click += button1_Click;
             // 
-            // comboBox1
+            // specComboBox
             // 
-            comboBox1.Anchor = AnchorStyles.None;
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.Font = new Font("Segoe UI", 15F);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Select token spec", "HOTP", "TOTP30", "TOTP60" });
-            comboBox1.Location = new Point(548, 10);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(219, 36);
-            comboBox1.TabIndex = 2;
-            comboBox1.Tag = "";
+            specComboBox.Anchor = AnchorStyles.None;
+            specComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            specComboBox.Font = new Font("Segoe UI", 15F);
+            specComboBox.FormattingEnabled = true;
+            specComboBox.Items.AddRange(new object[] { "Select token spec", "HOTP", "TOTP30", "TOTP60" });
+            specComboBox.Location = new Point(548, 10);
+            specComboBox.Name = "specComboBox";
+            specComboBox.Size = new Size(219, 36);
+            specComboBox.TabIndex = 2;
+            specComboBox.Tag = "";
             // 
             // titleFlowLayoutPanel
             // 
             titleFlowLayoutPanel.AutoSize = true;
             titleFlowLayoutPanel.Controls.Add(hypersecuLogoPictureBox);
-            titleFlowLayoutPanel.Controls.Add(label1);
+            titleFlowLayoutPanel.Controls.Add(titleLabel);
             titleFlowLayoutPanel.Location = new Point(0, 3);
             titleFlowLayoutPanel.Margin = new Padding(0, 3, 0, 0);
             titleFlowLayoutPanel.Name = "titleFlowLayoutPanel";
@@ -225,18 +226,18 @@
             hypersecuLogoPictureBox.TabIndex = 0;
             hypersecuLogoPictureBox.TabStop = false;
             // 
-            // label1
+            // titleLabel
             // 
-            label1.Anchor = AnchorStyles.Left;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.FromArgb(0, 146, 188);
-            label1.Location = new Point(73, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(322, 32);
-            label1.TabIndex = 0;
-            label1.Text = "OTP App Seed Importer 2.1.0";
-            label1.TextAlign = ContentAlignment.MiddleLeft;
+            titleLabel.Anchor = AnchorStyles.Left;
+            titleLabel.AutoSize = true;
+            titleLabel.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            titleLabel.ForeColor = Color.FromArgb(0, 146, 188);
+            titleLabel.Location = new Point(73, 9);
+            titleLabel.Name = "titleLabel";
+            titleLabel.Size = new Size(322, 32);
+            titleLabel.TabIndex = 0;
+            titleLabel.Text = "OTP App Seed Importer 2.1.0";
+            titleLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel2
             // 
@@ -279,7 +280,7 @@
             button2.Name = "button2";
             button2.Size = new Size(194, 41);
             button2.TabIndex = 0;
-            button2.Text = "Select a seed file";
+            button2.Text = "Select seed file";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
@@ -331,28 +332,31 @@
             pictureBox1.TabStop = false;
             pictureBox1.Visible = false;
             // 
-            // listBox1
+            // outputLogListBox
             // 
-            listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            listBox1.Font = new Font("Segoe UI", 15F);
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 28;
-            listBox1.Location = new Point(3, 165);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(970, 284);
-            listBox1.TabIndex = 4;
+            outputLogListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            outputLogListBox.BackColor = SystemColors.MenuBar;
+            outputLogListBox.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            outputLogListBox.FormattingEnabled = true;
+            outputLogListBox.ItemHeight = 17;
+            outputLogListBox.Location = new Point(3, 480);
+            outputLogListBox.Name = "outputLogListBox";
+            outputLogListBox.Size = new Size(970, 106);
+            outputLogListBox.TabIndex = 6;
             // 
-            // listBox2
+            // entriesListView
             // 
-            listBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            listBox2.BackColor = SystemColors.MenuBar;
-            listBox2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            listBox2.FormattingEnabled = true;
-            listBox2.ItemHeight = 17;
-            listBox2.Location = new Point(3, 480);
-            listBox2.Name = "listBox2";
-            listBox2.Size = new Size(970, 106);
-            listBox2.TabIndex = 6;
+            entriesListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            entriesListView.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            entriesListView.FullRowSelect = true;
+            entriesListView.Location = new Point(3, 165);
+            entriesListView.MultiSelect = false;
+            entriesListView.Name = "entriesListView";
+            entriesListView.Size = new Size(970, 309);
+            entriesListView.TabIndex = 7;
+            entriesListView.UseCompatibleStateImageBehavior = false;
+            entriesListView.View = View.Details;
+            entriesListView.Resize += entriesListView_Resize;
             // 
             // OTPAppSeedImporter
             // 
@@ -367,6 +371,7 @@
             Load += OTPAppSeedImporter_Load;
             tableLayoutPanel4.ResumeLayout(false);
             tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             titleFlowLayoutPanel.ResumeLayout(false);
@@ -383,26 +388,34 @@
 
         private TableLayoutPanel tableLayoutPanel4;
         private TableLayoutPanel tableLayoutPanel1;
-        private Label label1;
-        private Button button1;
+        private Label titleLabel;
+        private Button importToDatabaseButton;
         private TableLayoutPanel tableLayoutPanel2;
         private Button button2;
         private Button button3;
         private Label label2;
         private Label label3;
-        private ComboBox comboBox1;
+        private ComboBox specComboBox;
         private OpenFileDialog openFileDialog1;
         private OpenFileDialog openFileDialog2;
-        private ListBox listBox1;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private Button button4;
         private Label label4;
-        private ListBox listBox2;
+        private ListBox outputLogListBox;
         private Button button5;
         private Button button6;
         private TableLayoutPanel tableLayoutPanel3;
         private FlowLayoutPanel titleFlowLayoutPanel;
         private PictureBox hypersecuLogoPictureBox;
+        private ListView entriesListView;
+
+        // Event handler to resize the listview
+        private void entriesListView_Resize(object sender, EventArgs e)
+        {
+            int total = entriesListView.ClientSize.Width;
+            entriesListView.Columns[0].Width = (int)(total * 0.25);
+            entriesListView.Columns[1].Width = (int)(total * 0.75);
+        }
     }
 }

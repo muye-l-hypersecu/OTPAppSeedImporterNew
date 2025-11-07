@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS ft_tokeninfo (
 	seed VARCHAR(128) NOT NULL,
 	specId VARCHAR(6) NOT NULL,
 	importTime DATETIME DEFAULT (datetime('now', 'localtime')),
-	FOREIGN KEY (specID) REFERENCES tokenSpec(specID) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (specID) REFERENCES ft_tokenspec(specID) ON DELETE CASCADE ON UPDATE CASCADE
  );
 
  -- Creates the table for the token info
