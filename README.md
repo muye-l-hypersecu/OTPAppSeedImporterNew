@@ -1,5 +1,5 @@
-# OTPAppSeedImporter by Mu Ye and Sakura
-OTP App seed importer new version in C# and WinForms framework
+# OTPAppSeedImporter Version 2
+OTP App seed importer 2nd major version in C# and WinForms framework
 
 ### Table of Contents:
 - Features
@@ -122,5 +122,5 @@ Specifications of attributes:
 ```
 
 ## Credits:
-- **Original version:** [OTPAppSeedImporter (Daniel's version)](https://github.com/hypersecu/OTPAppSeedImporter)
+- **Original version (Version 1):** [OTPAppSeedImporter (Daniel's version)](https://github.com/hypersecu/OTPAppSeedImporter)
 - **Authors:** Mu Ye, Sakura
