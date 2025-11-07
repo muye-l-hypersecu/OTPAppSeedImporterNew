@@ -12,6 +12,7 @@ namespace OTPAppSeedImporterNew
 {
     public partial class OTPAppSeedImporter : Form
     {
+        private bool suppressResize = false;
         private bool seedFileSelected;
         private bool dbFileSelected;
         private string databasePath;
@@ -215,9 +216,12 @@ namespace OTPAppSeedImporterNew
 
                 // Remove the entry from the parsed file and listview
                 parsedFile.First.Remove(new SeedEntry(snToRemove, seedToRemove));
+
+                suppressResize = true;
                 entriesListView.Items.Remove(row);
-                
-                label4.Text = $"Removed serial number: {snToRemove}";
+                suppressResize = false;
+
+                label4.Text = $"Removed serial number entry: {snToRemove}";
 
                 // Display warning if there are no entries left.
                 if (parsedFile.First.Count == 0)
@@ -264,6 +268,7 @@ namespace OTPAppSeedImporterNew
             {
                 foreach (string duplicate in dbDuplicates)
                 {
+                    suppressResize = true;
                     for (int i = entriesListView.Items.Count - 1; i >= 0; i--)
                     {
                         ListViewItem row = entriesListView.Items[i];
@@ -284,6 +289,7 @@ namespace OTPAppSeedImporterNew
                             entriesListView.Items.RemoveAt(i);
                         }
                     }
+                    suppressResize = false;
                 }
                 button6.Visible = false;
 

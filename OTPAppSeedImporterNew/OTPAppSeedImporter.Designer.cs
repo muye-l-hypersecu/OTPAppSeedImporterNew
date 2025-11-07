@@ -88,7 +88,7 @@
             tableLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel3.ColumnCount = 4;
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 178F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 159F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 146F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
             tableLayoutPanel3.Controls.Add(button4, 1, 0);
@@ -113,9 +113,9 @@
             button4.ForeColor = SystemColors.Control;
             button4.Location = new Point(181, 3);
             button4.Name = "button4";
-            button4.Size = new Size(153, 34);
+            button4.Size = new Size(140, 34);
             button4.TabIndex = 0;
-            button4.Text = "Remove Entries";
+            button4.Text = "Remove Entry";
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
             // 
@@ -154,9 +154,9 @@
             // 
             label4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label4.Location = new Point(340, 0);
+            label4.Location = new Point(327, 0);
             label4.Name = "label4";
-            label4.Size = new Size(427, 40);
+            label4.Size = new Size(440, 40);
             label4.TabIndex = 1;
             label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -413,6 +413,8 @@
         // Event handler to resize the listview
         private void entriesListView_Resize(object sender, EventArgs e)
         {
+            if (suppressResize) return;
+
             int total = entriesListView.ClientSize.Width;
             entriesListView.Columns[0].Width = (int)(total * 0.25);
             entriesListView.Columns[1].Width = (int)(total * 0.75);
