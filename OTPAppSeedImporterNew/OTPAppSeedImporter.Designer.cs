@@ -413,7 +413,7 @@
         // Event handler to resize the listview
         private void entriesListView_Resize(object sender, EventArgs e)
         {
-            if (suppressResize) return;
+            if (suppressResize || entriesListView.Columns.Count < 2) return;
 
             int total = entriesListView.ClientSize.Width;
             entriesListView.Columns[0].Width = (int)(total * 0.25);
