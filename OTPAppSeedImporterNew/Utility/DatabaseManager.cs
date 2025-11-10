@@ -59,7 +59,7 @@ public static class DatabaseManager
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException("Unable to open database.");
+            throw new InvalidOperationException("Unable to open database. Please check the database path.");
         }
 
 		// checks if required tables exist
@@ -72,7 +72,8 @@ public static class DatabaseManager
         bool specExists = IsValidSpecId(connection, specId);
 		if (!specExists)
 		{
-			throw new InvalidOperationException($"The selected spec ID '{specId}' does not exist in the tokenspec table.");
+			throw new InvalidOperationException($"The selected spec type ({specId}) with ID '{specId}' does not exist in the database." +
+												$"\nPlease check your database or select a different spec type.");
 		}
 
         using var command = connection.CreateCommand();
@@ -189,6 +190,7 @@ public static class DatabaseManager
         }
 	}
 
+	// EFFECT: Checks if required tables exist in the database.
 	private static bool TablesExist(SQLiteConnection connection)
 	{
         var tableExistsCommand = connection.CreateCommand();
