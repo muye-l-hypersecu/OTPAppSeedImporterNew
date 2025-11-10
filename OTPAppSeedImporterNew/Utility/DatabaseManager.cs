@@ -22,11 +22,26 @@ public static class DatabaseManager
 		// Get the sql string from the Init.sql file, and then open the database connection
 		string sql = File.ReadAllText("Init.sql");
 		using var connection = new SQLiteConnection($"Data Source={dbPath}");
-		connection.Open();
+
+		try
+		{
+			connection.Open();
+		}
+		catch (Exception ex)
+		{
+            throw new InvalidOperationException("Unable to open database. Please check the database path.");
+        }
 
 		// Execute the sql file
-		using var sqLiteCmd = new SQLiteCommand(sql, connection);
-		sqLiteCmd.ExecuteNonQuery();
+		try
+		{
+            using var sqLiteCmd = new SQLiteCommand(sql, connection);
+            sqLiteCmd.ExecuteNonQuery();
+        } catch (Exception ex)
+		{
+			throw new InvalidOperationException("Unable to execute SQL tables.");
+		}
+		
 	}
 
 	// EFFECT: Inserts the seed entries into database
@@ -36,9 +51,16 @@ public static class DatabaseManager
 		InitializeDatabase(dbPath);
 
 		using var connection = new SQLiteConnection($"Data Source={dbPath}");
-		connection.Open();
+        try
+        {
+            connection.Open();
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Unable to open database.");
+        }
 
-		// checks that the provided specId exists
+        // checks that the provided specId exists
         bool specExists = IsValidSpecId(connection, specId);
 		if (!specExists)
 		{
@@ -74,9 +96,16 @@ public static class DatabaseManager
 	{
 		InitializeDatabase(dbPath);
         using var connection = new SQLiteConnection($"Data Source={dbPath}");
-        connection.Open();
+        try
+        {
+            connection.Open();
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Unable to open database.");
+        }
 
-		var duplicates = new List<string>();
+        var duplicates = new List<string>();
 
 		// A query to check the existing serialNumber
 		using var command = connection.CreateCommand();
