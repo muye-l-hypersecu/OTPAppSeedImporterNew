@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Data.SqlTypes;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Model;
@@ -10,8 +11,9 @@ namespace Utility;
 // Manages imports and connections to database. 
 public static class DatabaseManager
 {
-	// EFFECT: Initializes database, such as creating the tables when it doesn't exist yet. 
-	public static void InitializeDatabase(string dbPath)
+
+    // EFFECT: Initializes database, such as creating the tables when it doesn't exist yet. 
+    public static void InitializeDatabase(string dbPath)
 	{
 		// check if dbPath exists
 		if (!File.Exists(dbPath))
@@ -33,14 +35,14 @@ public static class DatabaseManager
         }
 
 		// Execute the sql file
-		try
-		{
-            using var sqLiteCmd = new SQLiteCommand(sql, connection);
-            sqLiteCmd.ExecuteNonQuery();
-        } catch (Exception ex)
-		{
-			throw new InvalidOperationException("Unable to execute SQL tables.\n" + ex.Message);
-		}
+		//try
+		//{
+  //          using var sqLiteCmd = new SQLiteCommand(sql, connection);
+  //          sqLiteCmd.ExecuteNonQuery();
+  //      } catch (Exception ex)
+		//{
+		//	throw new InvalidOperationException("Unable to execute SQL tables.\n" + ex.Message);
+		//}
 		
 	}
 
@@ -60,6 +62,12 @@ public static class DatabaseManager
             throw new InvalidOperationException("Unable to open database.");
         }
 
+		// checks if required tables exist
+		if (!TablesExist(connection))
+		{
+			throw new InvalidOperationException("Required tables 'ft_tokeninfo' and/or 'ft_tokenspec' does not exist in the database.");
+		}
+
         // checks that the provided specId exists
         bool specExists = IsValidSpecId(connection, specId);
 		if (!specExists)
@@ -67,20 +75,57 @@ public static class DatabaseManager
 			throw new InvalidOperationException($"The selected spec ID '{specId}' does not exist in the tokenspec table.");
 		}
 
-		// prepares for insertion
-		using var command = connection.CreateCommand();
-		command.CommandText = @"INSERT INTO ft_tokeninfo (serialNumber, seed, specId) " +
-                            "VALUES (@serialNumber, @seed, @specId)";
+        using var command = connection.CreateCommand();
+        command.CommandText = @"
+                INSERT INTO ft_tokeninfo (
+                    token, pubkey, authnum, physicaltype, producttype, specid, 
+                    importtime, pubkeystate, tknifmid, tknofmid, tkntype, tknstate
+                ) VALUES (
+                    @token, @pubkey, @authnum, @physicaltype, @producttype, @specid,
+                    @importtime, @pubkeystate, @tknifmid, @tknofmid, @tkntype, @tknstate
+                )";
+
+		var tokenParam = command.Parameters.Add("@token", System.Data.DbType.String);
+        var pubkeyParam = command.Parameters.Add("@pubkey", System.Data.DbType.String);
+        var authnumParam = command.Parameters.Add("@authnum", System.Data.DbType.String);
+        var physicaltypeParam = command.Parameters.Add("@physicaltype", System.Data.DbType.String);
+        var producttypeParam = command.Parameters.Add("@producttype", System.Data.DbType.String);
+        var specidParam = command.Parameters.Add("@specid", System.Data.DbType.String);
+        var importtimeParam = command.Parameters.Add("@importtime", System.Data.DbType.String);
+        var pubkeystateParam = command.Parameters.Add("@pubkeystate", System.Data.DbType.String);
+        var tknifmidParam = command.Parameters.Add("@tknifmid", System.Data.DbType.String);
+        var tknofmidParam = command.Parameters.Add("@tknofmid", System.Data.DbType.String);
+        var tkntypeParam = command.Parameters.Add("@tkntype", System.Data.DbType.String);
+        var tknstateParam = command.Parameters.Add("@tknstate", System.Data.DbType.String);
+
+        // Set default values for all entries
+        authnumParam.Value = "0";
+        physicaltypeParam.Value = 0;
+        producttypeParam.Value = 0;
+        specidParam.Value = specId;
+        importtimeParam.Value = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        pubkeystateParam.Value = 0;
+        tknifmidParam.Value = 1;
+        tknofmidParam.Value = 1;
+        tkntypeParam.Value = 1;
+        tknstateParam.Value = 1;
+
+        // prepares for insertion
+        //using var command2 = connection.CreateCommand();
+		//command.CommandText = @"INSERT INTO ft_tokeninfo (token, pubkey, specid) " +
+        //                   "VALUES (@token, @pubkey, @specid)";
 
 		int numberEntries = 0;
         // inserts entries
         foreach (var entry in entries)
 		{
 			numberEntries++;
-			command.Parameters.Clear();
-            command.Parameters.AddWithValue("@serialNumber", entry.GetSerialNumber());
-            command.Parameters.AddWithValue("@seed", entry.GetSeed());
-            command.Parameters.AddWithValue("@specId", specId);
+			//command.Parameters.Clear();
+   //         command.Parameters.AddWithValue("@token", entry.GetSerialNumber());
+   //         command.Parameters.AddWithValue("@pubkey", entry.GetSeed());
+   //         command.Parameters.AddWithValue("@specid", specId);
+			tokenParam.Value = entry.GetSerialNumber();
+			pubkeyParam.Value = entry.GetSeed();
 
             // executes SQL commands that do not return a result but modifies data in the database.
             command.ExecuteNonQuery();
@@ -109,8 +154,8 @@ public static class DatabaseManager
 
 		// A query to check the existing serialNumber
 		using var command = connection.CreateCommand();
-		command.CommandText = "SELECT serialNumber FROM ft_tokeninfo WHERE serialNumber = @serialNumber";
-		var tokenParam = command.Parameters.Add("@serialNumber", System.Data.DbType.String);
+		command.CommandText = "SELECT token FROM ft_tokeninfo WHERE token = @token";
+		var tokenParam = command.Parameters.Add("@token", System.Data.DbType.String);
 
 		foreach (var entry in entries)
 		{
@@ -143,4 +188,15 @@ public static class DatabaseManager
             return false;
         }
 	}
+
+	private static bool TablesExist(SQLiteConnection connection)
+	{
+        var tableExistsCommand = connection.CreateCommand();
+        tableExistsCommand.CommandText = @"
+			SELECT COUNT(*) FROM sqlite_master
+			WHERE type='table' AND name IN ('ft_tokeninfo', 'ft_tokenspec')";
+
+        var tableCount = Convert.ToInt32(tableExistsCommand.ExecuteScalar());
+		return tableCount >= 2;
+    }
 }
