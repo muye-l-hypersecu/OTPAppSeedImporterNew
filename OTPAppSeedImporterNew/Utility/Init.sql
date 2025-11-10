@@ -10,11 +10,11 @@ CREATE TABLE IF NOT EXISTS ft_tokeninfo (
  -- Creates the table for the token info
  CREATE TABLE IF NOT EXISTS ft_tokenspec (
 	specId VARCHAR(6) PRIMARY KEY,
-	intervalLength INTEGER
+	token_interval INTEGER NOT NULL
  );
 
  -- Insert the 3 required token spec types
- INSERT OR IGNORE INTO ft_tokenspec(specId, intervalLength) VALUES 
+ INSERT OR IGNORE INTO ft_tokenspec(specId, token_interval) VALUES 
 	("TOTP30", 30),
 	("TOTP60", 60),
 	("HOTP", 0);

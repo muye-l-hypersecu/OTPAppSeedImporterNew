@@ -39,7 +39,7 @@ public static class DatabaseManager
             sqLiteCmd.ExecuteNonQuery();
         } catch (Exception ex)
 		{
-			throw new InvalidOperationException("Unable to execute SQL tables.");
+			throw new InvalidOperationException("Unable to execute SQL tables.\n" + ex.Message);
 		}
 		
 	}
