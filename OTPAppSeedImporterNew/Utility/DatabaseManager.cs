@@ -12,45 +12,10 @@ namespace Utility;
 public static class DatabaseManager
 {
 
-    // EFFECT: Initializes database, such as creating the tables when it doesn't exist yet. 
-    public static void InitializeDatabase(string dbPath)
-	{
-		// check if dbPath exists
-		if (!File.Exists(dbPath))
-		{
-			throw new FileNotFoundException($"Database file not found: {dbPath}");
-		}
-
-		// Get the sql string from the Init.sql file, and then open the database connection
-		string sql = File.ReadAllText("Init.sql");
-		using var connection = new SQLiteConnection($"Data Source={dbPath}");
-
-		try
-		{
-			connection.Open();
-		}
-		catch (Exception ex)
-		{
-            throw new InvalidOperationException("Unable to open database. Please check the database path.");
-        }
-
-		// Execute the sql file
-		//try
-		//{
-  //          using var sqLiteCmd = new SQLiteCommand(sql, connection);
-  //          sqLiteCmd.ExecuteNonQuery();
-  //      } catch (Exception ex)
-		//{
-		//	throw new InvalidOperationException("Unable to execute SQL tables.\n" + ex.Message);
-		//}
-		
-	}
-
 	// EFFECT: Inserts the seed entries into database
 	// RETURNS: the number of serial numbers inserted
 	public static int InsertSeedEntries(string dbPath, List<SeedEntry> entries, string specId)
 	{
-		InitializeDatabase(dbPath);
 
 		using var connection = new SQLiteConnection($"Data Source={dbPath}");
         try
@@ -111,20 +76,12 @@ public static class DatabaseManager
         tkntypeParam.Value = 1;
         tknstateParam.Value = 1;
 
-        // prepares for insertion
-        //using var command2 = connection.CreateCommand();
-		//command.CommandText = @"INSERT INTO ft_tokeninfo (token, pubkey, specid) " +
-        //                   "VALUES (@token, @pubkey, @specid)";
 
 		int numberEntries = 0;
         // inserts entries
         foreach (var entry in entries)
 		{
 			numberEntries++;
-			//command.Parameters.Clear();
-   //         command.Parameters.AddWithValue("@token", entry.GetSerialNumber());
-   //         command.Parameters.AddWithValue("@pubkey", entry.GetSeed());
-   //         command.Parameters.AddWithValue("@specid", specId);
 			tokenParam.Value = entry.GetSerialNumber();
 			pubkeyParam.Value = entry.GetSeed();
 
@@ -140,7 +97,6 @@ public static class DatabaseManager
 	// RETURNS: a list of duplicate serial numbers
 	public static List<string> CheckForDuplicates(string dbPath, List<SeedEntry> entries)
 	{
-		InitializeDatabase(dbPath);
         using var connection = new SQLiteConnection($"Data Source={dbPath}");
         try
         {
