@@ -60,55 +60,44 @@ namespace OTPAppSeedImporterNew
             }
             else
             {
-                try
+                // Check for duplicates in the database, and if there are any, then display the serial numbers
+                dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
+                outputLogListBox.Items.Insert(0, string.Empty);
+                foreach (string dbDuplicate in dbDuplicates)
                 {
-                    // Check for duplicates in the database, and if there are any, then display the serial numbers
-                    dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
-                    outputLogListBox.Items.Insert(0, string.Empty);
-                    foreach (string dbDuplicate in dbDuplicates)
-                    {
-                        outputLogListBox.Items.Insert(0, $"- {dbDuplicate}");
-                    }
+                    outputLogListBox.Items.Insert(0, $"- {dbDuplicate}");
+                }
 
-                    // If there is at least one duplicate, then display error message. Otherwise, import the database
-                    if (dbDuplicates.Count > 0)
+                // If there is at least one duplicate, then display error message. Otherwise, import the database
+                if (dbDuplicates.Count > 0)
+                {
+                    button6.Visible = true;
+                    if (dbDuplicates.Count == 1)
                     {
-                        button6.Visible = true;
-                        if (dbDuplicates.Count == 1)
-                        {
-                            outputLogListBox.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which are listed below:");
-                        }
-                        else
-                        {
-                            outputLogListBox.Items.Insert(0, $"ERROR: There are {dbDuplicates.Count} token serial numbers already in the database, which are listed below:");
-                        }
+                        outputLogListBox.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which are listed below:");
                     }
                     else
                     {
-                        string specId = specComboBox.SelectedItem.ToString();
-                        int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
-
-                        if (numEntriesSuccess == 1)
-                        {
-                            outputLogListBox.Items.Insert(0, $"SUCCESS: Imported 1 token entry to the database.");
-                        }
-                        else
-                        {
-                            outputLogListBox.Items.Insert(0, $"SUCCESS: Imported {numEntriesSuccess} token entries to the database.");
-                        }
-
-                        // Reset the page
-                        ResetPage();
-
+                        outputLogListBox.Items.Insert(0, $"ERROR: There are {dbDuplicates.Count} token serial numbers already in the database, which are listed below:");
                     }
                 }
-                catch (InvalidOperationException ex)
+                else
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                catch (FileNotFoundException ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string specId = specComboBox.SelectedItem.ToString();
+                    int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
+
+                    if (numEntriesSuccess == 1)
+                    {
+                        outputLogListBox.Items.Insert(0, $"SUCCESS: Imported 1 token entry to the database.");
+                    }
+                    else
+                    {
+                        outputLogListBox.Items.Insert(0, $"SUCCESS: Imported {numEntriesSuccess} token entries to the database.");
+                    }
+
+                    // Reset the page
+                    ResetPage();
+
                 }
 
             }
