@@ -9,6 +9,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Images\hypersecu_logo-removebg-preview.ico</ApplicationIcon>
     <NoWin32Manifest>true</NoWin32Manifest>
+    <AssemblyName>OTPAppSeedImporter</AssemblyName>
+    <Authors>OTPAppSeedImporter</Authors>
+    <Company>OTPAppSeedImporter</Company>
+    <Product>OTPAppSeedImporter</Product>
+    <Copyright>Copyright (C) 2025 Hypersecu Information Systems Inc.</Copyright>
+    <FileVersion>2.1.25.1112</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
