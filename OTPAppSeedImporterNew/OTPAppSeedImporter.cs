@@ -46,19 +46,23 @@ namespace OTPAppSeedImporterNew
                 // If inputs are not properly selected, then display error message, otherwise, attempt to import to database
                 if (!seedFileSelected)
                 {
-                    MessageBox.Show("A seed file is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    outputLogListBox.Items.Insert(0, string.Empty);
+                    outputLogListBox.Items.Insert(0, "Please select a seed file first.");
                 }
                 else if (!dbFileSelected)
                 {
-                    MessageBox.Show("Database is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    outputLogListBox.Items.Insert(0, string.Empty);
+                    outputLogListBox.Items.Insert(0, "Please select a database file first.");
                 }
                 else if (!(tokenSpec == 1 || tokenSpec == 2 | tokenSpec == 3))
                 {
-                    MessageBox.Show("A token spec is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    outputLogListBox.Items.Insert(0, string.Empty);
+                    outputLogListBox.Items.Insert(0, "Please select a token spec first.");
                 }
                 else if (parsedFile.First.Count == 0)
                 {
-                    MessageBox.Show("There are no tokens to import to database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    outputLogListBox.Items.Insert(0, string.Empty);
+                    outputLogListBox.Items.Insert(0, "There are no tokens to import to database.");
                 }
                 else
                 {
@@ -106,15 +110,19 @@ namespace OTPAppSeedImporterNew
             }
             catch (FileNotFoundException ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                outputLogListBox.Items.Insert(0, string.Empty);
+                outputLogListBox.Items.Insert(0, ex.Message);
+                //MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (InvalidOperationException ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                outputLogListBox.Items.Insert(0, string.Empty);
+                outputLogListBox.Items.Insert(0, ex.Message);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                outputLogListBox.Items.Insert(0, string.Empty);
+                outputLogListBox.Items.Insert(0, ex.Message);
             }
 
 
@@ -216,7 +224,12 @@ namespace OTPAppSeedImporterNew
                 pictureBox2.Visible = true;
 
                 outputLogListBox.Items.Insert(0, string.Empty);
-                outputLogListBox.Items.Insert(0, "SUCCESS: Database connected.");
+                if (DatabaseManager.testDatabaseConnection(databasePath)) {
+                    outputLogListBox.Items.Insert(0, "SUCCESS: Database connected.");
+                }
+                else {
+                    outputLogListBox.Items.Insert(0, "WARNING: Cannot connect to database.");
+                }
             }
         }
 

@@ -11,37 +11,24 @@ namespace Utility;
 // Manages imports and connections to database. 
 public static class DatabaseManager
 {
-
-    // EFFECT: Initializes database, such as creating the tables when it doesn't exist yet. 
-    public static void InitializeDatabase(string dbPath)
+	public static bool testDatabaseConnection (string dbPath)
 	{
-		// check if dbPath exists
-		if (!File.Exists(dbPath))
-		{
-			throw new FileNotFoundException($"Database file not found: {dbPath}");
-		}
-
-		// Get the sql string from the Init.sql file, and then open the database connection
-		string sql = File.ReadAllText("Init.sql");
-		using var connection = new SQLiteConnection($"Data Source={dbPath}");
-
-		try
-		{
-			connection.Open();
-		}
-		catch
-		{
-            throw new InvalidOperationException("Unable to open database. Please check the database path.");
+        if (string.IsNullOrEmpty(dbPath) || !File.Exists(dbPath))
+        {
+			return false;
         }
-		
-	}
+
+		//  Test that required tables exist
+        using var connection = new SQLiteConnection($"Data Source={dbPath}");
+        connection.Open();
+        bool tableExists = TablesExist(connection);
+		return tableExists;
+    }
 
 	// EFFECT: Inserts the seed entries into database
 	// RETURNS: the number of serial numbers inserted
 	public static int InsertSeedEntries(string dbPath, List<SeedEntry> entries, string specId)
 	{
-		InitializeDatabase(dbPath);
-
 		using var connection = new SQLiteConnection($"Data Source={dbPath}");
         try
         {
@@ -63,8 +50,7 @@ public static class DatabaseManager
 		bool specExists = IsValidSpecId(connection, specId);
 		if (!specExists)
 		{
-			throw new InvalidOperationException($"The selected spec type ({specId}) with ID '{specId}' does not exist in the database." +
-												$"\nPlease check your database or select a different spec type.");
+			throw new InvalidOperationException($"The selected spec type ({specId}) with ID '{specId}' does not exist in the database. Please check your database or select a different spec type.");
 		}
 
         using var command = connection.CreateCommand();
@@ -122,7 +108,6 @@ public static class DatabaseManager
 	// RETURNS: a list of duplicate serial numbers
 	public static List<string> CheckForDuplicates(string dbPath, List<SeedEntry> entries)
 	{
-		InitializeDatabase(dbPath);
         using var connection = new SQLiteConnection($"Data Source={dbPath}");
         try
         {
