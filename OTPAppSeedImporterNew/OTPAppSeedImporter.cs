@@ -66,6 +66,7 @@ namespace OTPAppSeedImporterNew
                     dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
 
                     // If there is at least one duplicate, then display error message. Otherwise, import the database
+                    DateTime localTime = DateTime.Now;
                     if (dbDuplicates.Count > 0)
                     {
                         outputLogListBox.Items.Insert(0, string.Empty);
@@ -76,24 +77,26 @@ namespace OTPAppSeedImporterNew
                         button6.Visible = true;
                         if (dbDuplicates.Count == 1)
                         {
-                            outputLogListBox.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which is listed below:");
+                            outputLogListBox.Items.Insert(0, $"{localTime} ERROR: There is 1 token serial number already in the database, which is listed below:");
                         }
                         else
                         {
-                            outputLogListBox.Items.Insert(0, $"ERROR: There are {dbDuplicates.Count} token serial numbers already in the database, which are listed below:");
+                            outputLogListBox.Items.Insert(0, $"{localTime} ERROR: There are {dbDuplicates.Count} token serial numbers already in the database, which are listed below:");
                         }
                     }
                     else
                     {
                         string specId = specComboBox.SelectedItem.ToString();
                         int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
-
+                        outputLogListBox.Items.Insert(0, string.Empty);
                         if (numEntriesSuccess == 1)
                         {
+                            outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Imported 1 token entry to the database.");
                             MessageBox.Show("SUCCESS: Imported 1 token entry to the database.", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
+                            outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Imported {numEntriesSuccess} token entries to the database.");
                             MessageBox.Show($"SUCCESS: Imported {numEntriesSuccess} token entries to the database.", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
 
@@ -137,17 +140,18 @@ namespace OTPAppSeedImporterNew
                     // Parse the seed file
                     parsedFile = await SeedFileParser.ParseSeedFile(openFileDialog1.FileName);
 
+                    DateTime localTime = DateTime.Now;
                     // If there is invalid entries of duplicates in the seed file, display the corresponding messages too
                     outputLogListBox.Items.Insert(0, string.Empty);
                     if (parsedFile.Second.First > 0)
                     {
                         if (parsedFile.Second.First == 1)
                         {
-                            outputLogListBox.Items.Insert(0, $"WARNING: Omitted 1 invalid entry from seed file.");
+                            outputLogListBox.Items.Insert(0, $"{localTime} WARNING: Omitted 1 invalid entry from seed file.");
                         }
                         else
                         {
-                            outputLogListBox.Items.Insert(0, $"WARNING: Omitted {parsedFile.Second.First} invalid entries from seed file.");
+                            outputLogListBox.Items.Insert(0, $"{localTime} WARNING: Omitted {parsedFile.Second.First} invalid entries from seed file.");
                         }
                     }
 
@@ -155,11 +159,11 @@ namespace OTPAppSeedImporterNew
                     {
                         if (parsedFile.Second.Second == 1)
                         {
-                            outputLogListBox.Items.Insert(0, $"WARNING: Omitted 1 duplicate from seed file.");
+                            outputLogListBox.Items.Insert(0, $"{localTime} WARNING: Omitted 1 duplicate from seed file.");
                         }
                         else
                         {
-                            outputLogListBox.Items.Insert(0, $"WARNING: Omitted {parsedFile.Second.Second} duplicates from seed file.");
+                            outputLogListBox.Items.Insert(0, $"{localTime} WARNING: Omitted {parsedFile.Second.Second} duplicates from seed file.");
                         }
                     }
 
@@ -168,16 +172,16 @@ namespace OTPAppSeedImporterNew
                     {
                         if (parsedFile.First.Count == 1)
                         {
-                            outputLogListBox.Items.Insert(0, $"SUCCESS: Parsed 1 token entry from seed file.");
+                            outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Parsed 1 token entry from seed file.");
                         }
                         else
                         {
-                            outputLogListBox.Items.Insert(0, $"SUCCESS: Parsed {parsedFile.First.Count} token entries from seed file.");
+                            outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Parsed {parsedFile.First.Count} token entries from seed file.");
                         }
                     }
                     else
                     {
-                        outputLogListBox.Items.Insert(0, "ERROR: Did not parse any token entries.");
+                        outputLogListBox.Items.Insert(0, $"{localTime} ERROR: Did not parse any token entries.");
                     }
 
 
@@ -245,11 +249,12 @@ namespace OTPAppSeedImporterNew
 
                 label4.Text = $"Removed serial number entry: {snToRemove}";
 
+                DateTime localTime = DateTime.Now;
                 // Display a warning if there are no entries left.
                 if (parsedFile.First.Count == 0)
                 {
                     outputLogListBox.Items.Insert(0, string.Empty);
-                    outputLogListBox.Items.Insert(0, "WARNING: There are no serial numbers left to import.");
+                    outputLogListBox.Items.Insert(0, $"{localTime} WARNING: There are no serial numbers left to import.");
                 }
             } else
             {
@@ -316,13 +321,14 @@ namespace OTPAppSeedImporterNew
                 button6.Visible = false;
 
                 // Add a log to the output
+                DateTime localTime = DateTime.Now;
                 outputLogListBox.Items.Insert(0, string.Empty);
-                outputLogListBox.Items.Insert(0, "SUCCESS: Removed duplicate token entries.");
+                outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Removed duplicate token entries.");
 
                 // Display warning if there are no entries left.
                 if (parsedFile.First.Count == 0)
                 {
-                    outputLogListBox.Items.Insert(0, "WARNING: There are no serial numbers left to import.");
+                    outputLogListBox.Items.Insert(0, $"{localTime} WARNING: There are no serial numbers left to import.");
                 }
             }
 
