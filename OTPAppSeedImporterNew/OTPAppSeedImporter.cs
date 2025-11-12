@@ -39,68 +39,84 @@ namespace OTPAppSeedImporterNew
         // Import to database button
         private void button1_Click(object sender, EventArgs e)
         {
-            int tokenSpec = specComboBox.SelectedIndex;
+            try
+            {
+                int tokenSpec = specComboBox.SelectedIndex;
 
-            // If inputs are not properly selected, then display error message, otherwise, attempt to import to database
-            if (!seedFileSelected)
-            {
-                MessageBox.Show("A seed file is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else if (!dbFileSelected)
-            {
-                MessageBox.Show("Database is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else if (!(tokenSpec == 1 || tokenSpec == 2 | tokenSpec == 3))
-            {
-                MessageBox.Show("A token spec is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else if (parsedFile.First.Count == 0)
-            {
-                MessageBox.Show("There are no tokens to import to database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                // Check for duplicates in the database, and if there are any, then display the serial numbers
-                dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
-                outputLogListBox.Items.Insert(0, string.Empty);
-                foreach (string dbDuplicate in dbDuplicates)
+                // If inputs are not properly selected, then display error message, otherwise, attempt to import to database
+                if (!seedFileSelected)
                 {
-                    outputLogListBox.Items.Insert(0, $"- {dbDuplicate}");
+                    MessageBox.Show("A seed file is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                // If there is at least one duplicate, then display error message. Otherwise, import the database
-                if (dbDuplicates.Count > 0)
+                else if (!dbFileSelected)
                 {
-                    button6.Visible = true;
-                    if (dbDuplicates.Count == 1)
-                    {
-                        outputLogListBox.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which are listed below:");
-                    }
-                    else
-                    {
-                        outputLogListBox.Items.Insert(0, $"ERROR: There are {dbDuplicates.Count} token serial numbers already in the database, which are listed below:");
-                    }
+                    MessageBox.Show("Database is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (!(tokenSpec == 1 || tokenSpec == 2 | tokenSpec == 3))
+                {
+                    MessageBox.Show("A token spec is not selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (parsedFile.First.Count == 0)
+                {
+                    MessageBox.Show("There are no tokens to import to database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    string specId = specComboBox.SelectedItem.ToString();
-                    int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
-
-                    if (numEntriesSuccess == 1)
+                    // Check for duplicates in the database, and if there are any, then display the serial numbers
+                    dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
+                    outputLogListBox.Items.Insert(0, string.Empty);
+                    foreach (string dbDuplicate in dbDuplicates)
                     {
-                        outputLogListBox.Items.Insert(0, $"SUCCESS: Imported 1 token entry to the database.");
+                        outputLogListBox.Items.Insert(0, $"- {dbDuplicate}");
+                    }
+
+                    // If there is at least one duplicate, then display error message. Otherwise, import the database
+                    if (dbDuplicates.Count > 0)
+                    {
+                        button6.Visible = true;
+                        if (dbDuplicates.Count == 1)
+                        {
+                            outputLogListBox.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which are listed below:");
+                        }
+                        else
+                        {
+                            outputLogListBox.Items.Insert(0, $"ERROR: There are {dbDuplicates.Count} token serial numbers already in the database, which are listed below:");
+                        }
                     }
                     else
                     {
-                        outputLogListBox.Items.Insert(0, $"SUCCESS: Imported {numEntriesSuccess} token entries to the database.");
+                        string specId = specComboBox.SelectedItem.ToString();
+                        int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
+
+                        if (numEntriesSuccess == 1)
+                        {
+                            outputLogListBox.Items.Insert(0, $"SUCCESS: Imported 1 token entry to the database.");
+                        }
+                        else
+                        {
+                            outputLogListBox.Items.Insert(0, $"SUCCESS: Imported {numEntriesSuccess} token entries to the database.");
+                        }
+
+                        // Reset the page
+                        ResetPage();
+
                     }
 
-                    // Reset the page
-                    ResetPage();
-
                 }
-
             }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
         }
 

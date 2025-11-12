@@ -29,20 +29,10 @@ public static class DatabaseManager
 		{
 			connection.Open();
 		}
-		catch (Exception ex)
+		catch
 		{
             throw new InvalidOperationException("Unable to open database. Please check the database path.");
         }
-
-		// Execute the sql file
-		//try
-		//{
-  //          using var sqLiteCmd = new SQLiteCommand(sql, connection);
-  //          sqLiteCmd.ExecuteNonQuery();
-  //      } catch (Exception ex)
-		//{
-		//	throw new InvalidOperationException("Unable to execute SQL tables.\n" + ex.Message);
-		//}
 		
 	}
 
@@ -57,19 +47,20 @@ public static class DatabaseManager
         {
             connection.Open();
         }
-        catch (Exception ex)
+        catch
         {
             throw new InvalidOperationException("Unable to open database. Please check the database path.");
         }
 
 		// checks if required tables exist
-		if (!TablesExist(connection))
-		{
-			throw new InvalidOperationException("Required tables 'ft_tokeninfo' and/or 'ft_tokenspec' does not exist in the database.");
-		}
+		//bool tableExists = TablesExist(connection);
+		//if (!tableExists)
+		//{
+		//	throw new InvalidOperationException("Required tables 'ft_tokeninfo' and/or 'ft_tokenspec' does not exist in the database.");
+		//}
 
-        // checks that the provided specId exists
-        bool specExists = IsValidSpecId(connection, specId);
+		// checks that the provided specId exists
+		bool specExists = IsValidSpecId(connection, specId);
 		if (!specExists)
 		{
 			throw new InvalidOperationException($"The selected spec type ({specId}) with ID '{specId}' does not exist in the database." +
@@ -111,20 +102,11 @@ public static class DatabaseManager
         tkntypeParam.Value = 1;
         tknstateParam.Value = 1;
 
-        // prepares for insertion
-        //using var command2 = connection.CreateCommand();
-		//command.CommandText = @"INSERT INTO ft_tokeninfo (token, pubkey, specid) " +
-        //                   "VALUES (@token, @pubkey, @specid)";
-
 		int numberEntries = 0;
         // inserts entries
         foreach (var entry in entries)
 		{
 			numberEntries++;
-			//command.Parameters.Clear();
-   //         command.Parameters.AddWithValue("@token", entry.GetSerialNumber());
-   //         command.Parameters.AddWithValue("@pubkey", entry.GetSeed());
-   //         command.Parameters.AddWithValue("@specid", specId);
 			tokenParam.Value = entry.GetSerialNumber();
 			pubkeyParam.Value = entry.GetSeed();
 
@@ -155,6 +137,13 @@ public static class DatabaseManager
 
 		// A query to check the existing serialNumber
 		using var command = connection.CreateCommand();
+
+		bool tableExists = TablesExist(connection);
+		if (!tableExists)
+		{
+            throw new InvalidOperationException("Required tables 'ft_tokeninfo' and/or 'ft_tokenspec' does not exist in the database.");
+        }
+
 		command.CommandText = "SELECT token FROM ft_tokeninfo WHERE token = @token";
 		var tokenParam = command.Parameters.Add("@token", System.Data.DbType.String);
 
@@ -193,12 +182,18 @@ public static class DatabaseManager
 	// EFFECT: Checks if required tables exist in the database.
 	private static bool TablesExist(SQLiteConnection connection)
 	{
-        var tableExistsCommand = connection.CreateCommand();
-        tableExistsCommand.CommandText = @"
-			SELECT COUNT(*) FROM sqlite_master
-			WHERE type='table' AND name IN ('ft_tokeninfo', 'ft_tokenspec')";
+		try
+		{
+            var cmd = connection.CreateCommand();
+            cmd.CommandText = @"SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name IN ('ft_tokeninfo', 'ft_tokenspec')";
 
-        var tableCount = Convert.ToInt32(tableExistsCommand.ExecuteScalar());
-		return tableCount >= 2;
+            var tableCount = Convert.ToInt32(cmd.ExecuteScalar());
+            return tableCount >= 2;
+        }
+		catch
+		{
+			return false;
+		}
+        
     }
 }
