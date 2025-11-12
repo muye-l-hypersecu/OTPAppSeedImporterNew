@@ -230,7 +230,7 @@
             this.titleFlowLayoutPanel.Location = new System.Drawing.Point(0, 3);
             this.titleFlowLayoutPanel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.titleFlowLayoutPanel.Name = "titleFlowLayoutPanel";
-            this.titleFlowLayoutPanel.Size = new System.Drawing.Size(313, 43);
+            this.titleFlowLayoutPanel.Size = new System.Drawing.Size(364, 43);
             this.titleFlowLayoutPanel.TabIndex = 3;
             // 
             // hypersecuLogoPictureBox
@@ -252,9 +252,9 @@
             this.titleLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(188)))));
             this.titleLabel.Location = new System.Drawing.Point(64, 5);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(246, 32);
+            this.titleLabel.Size = new System.Drawing.Size(297, 32);
             this.titleLabel.TabIndex = 0;
-            this.titleLabel.Text = "OTPAppSeedImporter";
+            this.titleLabel.Text = "OTPAppSeedImporter 2.1.1";
             this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel2

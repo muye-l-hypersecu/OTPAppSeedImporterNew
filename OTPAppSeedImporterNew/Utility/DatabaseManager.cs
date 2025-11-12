@@ -106,7 +106,7 @@ public static class DatabaseManager
 		bool tableExists = TablesExist(connection);
 		if (!tableExists)
 		{
-            throw new InvalidOperationException("Required tables 'ft_tokeninfo' and/or 'ft_tokenspec' does not exist in the database.");
+            throw new InvalidOperationException("Required tables 'ft_tokeninfo' and/or 'ft_tokenspec' do not exist in the database.");
         }
 
 		command.CommandText = "SELECT token FROM ft_tokeninfo WHERE token = @token";

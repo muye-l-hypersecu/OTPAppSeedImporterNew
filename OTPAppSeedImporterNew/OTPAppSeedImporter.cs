@@ -46,41 +46,37 @@ namespace OTPAppSeedImporterNew
                 // If inputs are not properly selected, then display error message, otherwise, attempt to import to database
                 if (!seedFileSelected)
                 {
-                    outputLogListBox.Items.Insert(0, string.Empty);
-                    outputLogListBox.Items.Insert(0, "Please select a seed file first.");
+                    MessageBox.Show("Please select a seed file first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (!dbFileSelected)
                 {
-                    outputLogListBox.Items.Insert(0, string.Empty);
-                    outputLogListBox.Items.Insert(0, "Please select a database file first.");
+                    MessageBox.Show("Please select a database file first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (!(tokenSpec == 1 || tokenSpec == 2 | tokenSpec == 3))
                 {
-                    outputLogListBox.Items.Insert(0, string.Empty);
-                    outputLogListBox.Items.Insert(0, "Please select a token spec first.");
+                    MessageBox.Show("Please select a token spec first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (parsedFile.First.Count == 0)
                 {
-                    outputLogListBox.Items.Insert(0, string.Empty);
-                    outputLogListBox.Items.Insert(0, "There are no tokens to import to database.");
+                    MessageBox.Show("There are no tokens to import to the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
                     // Check for duplicates in the database, and if there are any, then display the serial numbers
                     dbDuplicates = DatabaseManager.CheckForDuplicates(databasePath, parsedFile.First);
-                    outputLogListBox.Items.Insert(0, string.Empty);
-                    foreach (string dbDuplicate in dbDuplicates)
-                    {
-                        outputLogListBox.Items.Insert(0, $"- {dbDuplicate}");
-                    }
 
                     // If there is at least one duplicate, then display error message. Otherwise, import the database
                     if (dbDuplicates.Count > 0)
                     {
+                        outputLogListBox.Items.Insert(0, string.Empty);
+                        foreach (string dbDuplicate in dbDuplicates)
+                        {
+                            outputLogListBox.Items.Insert(0, $"- {dbDuplicate}");
+                        }
                         button6.Visible = true;
                         if (dbDuplicates.Count == 1)
                         {
-                            outputLogListBox.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which are listed below:");
+                            outputLogListBox.Items.Insert(0, "ERROR: There is 1 token serial number already in the database, which is listed below:");
                         }
                         else
                         {
@@ -94,11 +90,11 @@ namespace OTPAppSeedImporterNew
 
                         if (numEntriesSuccess == 1)
                         {
-                            outputLogListBox.Items.Insert(0, $"SUCCESS: Imported 1 token entry to the database.");
+                            MessageBox.Show("SUCCESS: Imported 1 token entry to the database.", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            outputLogListBox.Items.Insert(0, $"SUCCESS: Imported {numEntriesSuccess} token entries to the database.");
+                            MessageBox.Show($"SUCCESS: Imported {numEntriesSuccess} token entries to the database.", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
 
                         // Reset the page
@@ -110,19 +106,15 @@ namespace OTPAppSeedImporterNew
             }
             catch (FileNotFoundException ex)
             {
-                outputLogListBox.Items.Insert(0, string.Empty);
-                outputLogListBox.Items.Insert(0, ex.Message);
-                //MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (InvalidOperationException ex)
             {
-                outputLogListBox.Items.Insert(0, string.Empty);
-                outputLogListBox.Items.Insert(0, ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                outputLogListBox.Items.Insert(0, string.Empty);
-                outputLogListBox.Items.Insert(0, ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -224,11 +216,12 @@ namespace OTPAppSeedImporterNew
                 pictureBox2.Visible = true;
 
                 outputLogListBox.Items.Insert(0, string.Empty);
+                DateTime localTime = DateTime.Now;
                 if (DatabaseManager.testDatabaseConnection(databasePath)) {
-                    outputLogListBox.Items.Insert(0, "SUCCESS: Database connected.");
+                    outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Database connected.");
                 }
                 else {
-                    outputLogListBox.Items.Insert(0, "WARNING: Cannot connect to database.");
+                    outputLogListBox.Items.Insert(0, $"{localTime} WARNING: Cannot connect to database.");
                 }
             }
         }
@@ -252,7 +245,7 @@ namespace OTPAppSeedImporterNew
 
                 label4.Text = $"Removed serial number entry: {snToRemove}";
 
-                // Display warning if there are no entries left.
+                // Display a warning if there are no entries left.
                 if (parsedFile.First.Count == 0)
                 {
                     outputLogListBox.Items.Insert(0, string.Empty);
