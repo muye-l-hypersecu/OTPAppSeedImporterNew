@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Utility;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace OTPAppSeedImporterNew
+namespace OTPAppSeedImporter
 {
     public partial class OTPAppSeedImporter : Form
     {

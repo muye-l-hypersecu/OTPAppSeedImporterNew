@@ -1,4 +1,4 @@
-namespace OTPAppSeedImporterNew
+namespace OTPAppSeedImporter
 {
     internal static class Program
     {

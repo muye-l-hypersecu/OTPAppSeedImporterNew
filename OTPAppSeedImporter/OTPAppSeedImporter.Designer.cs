@@ -1,4 +1,4 @@
-﻿namespace OTPAppSeedImporterNew
+﻿namespace OTPAppSeedImporter
 {
     partial class OTPAppSeedImporter
     {
