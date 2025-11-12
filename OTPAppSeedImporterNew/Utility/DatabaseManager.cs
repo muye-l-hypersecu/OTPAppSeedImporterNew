@@ -11,6 +11,8 @@ namespace Utility;
 // Manages imports and connections to database. 
 public static class DatabaseManager
 {
+	// EFFECT: Check the connection of database
+	// RETURNS: true if database exists and has all required tables, false otherwise.
 	public static bool testDatabaseConnection (string dbPath)
 	{
         if (string.IsNullOrEmpty(dbPath) || !File.Exists(dbPath))
@@ -30,21 +32,7 @@ public static class DatabaseManager
 	public static int InsertSeedEntries(string dbPath, List<SeedEntry> entries, string specId)
 	{
 		using var connection = new SQLiteConnection($"Data Source={dbPath}");
-        try
-        {
-            connection.Open();
-        }
-        catch
-        {
-            throw new InvalidOperationException("Unable to open database. Please check the database path.");
-        }
-
-		// checks if required tables exist
-		//bool tableExists = TablesExist(connection);
-		//if (!tableExists)
-		//{
-		//	throw new InvalidOperationException("Required tables 'ft_tokeninfo' and/or 'ft_tokenspec' does not exist in the database.");
-		//}
+		connection.Open();
 
 		// checks that the provided specId exists
 		bool specExists = IsValidSpecId(connection, specId);
@@ -92,13 +80,12 @@ public static class DatabaseManager
         // inserts entries
         foreach (var entry in entries)
 		{
-			numberEntries++;
-			tokenParam.Value = entry.GetSerialNumber();
-			pubkeyParam.Value = entry.GetSeed();
+            numberEntries++;
+            tokenParam.Value = entry.GetSerialNumber();
+            pubkeyParam.Value = entry.GetSeed();
 
             // executes SQL commands that do not return a result but modifies data in the database.
             command.ExecuteNonQuery();
-			
         }
 		return numberEntries;
 	}
@@ -109,14 +96,7 @@ public static class DatabaseManager
 	public static List<string> CheckForDuplicates(string dbPath, List<SeedEntry> entries)
 	{
         using var connection = new SQLiteConnection($"Data Source={dbPath}");
-        try
-        {
-            connection.Open();
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Unable to open database.");
-        }
+		connection.Open();
 
         var duplicates = new List<string>();
 
