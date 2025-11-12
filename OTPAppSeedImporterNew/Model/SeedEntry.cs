@@ -29,10 +29,10 @@ public class SeedEntry
         return false;
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(serialNumber, seed);
-    }
+    //public override int GetHashCode()
+    //{
+    //    return HashCode.Combine(serialNumber, seed);
+    //}
 
     public override string ToString()
     {

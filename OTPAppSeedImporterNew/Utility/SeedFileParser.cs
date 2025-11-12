@@ -22,7 +22,8 @@ public static class SeedFileParser
         // Instantiate the seed entry array list and invalid entries accumulator, then get all lines of the filepath
         List<SeedEntry> seedEntries = new List<SeedEntry>();
 
-        string[] lines = await File.ReadAllLinesAsync(filePath);
+        //string[] lines = await File.ReadAllLinesAsync(filePath);
+        string[] lines = File.ReadAllLines(filePath);
         int noInvalid = 0;
         int noDuplicates = 0;
         foreach (string line in lines)
