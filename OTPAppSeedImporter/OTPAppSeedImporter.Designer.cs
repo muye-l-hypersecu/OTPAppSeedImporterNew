@@ -366,12 +366,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.outputLogListBox.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.outputLogListBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputLogListBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputLogListBox.FormattingEnabled = true;
-            this.outputLogListBox.ItemHeight = 17;
+            this.outputLogListBox.ItemHeight = 15;
             this.outputLogListBox.Location = new System.Drawing.Point(3, 483);
             this.outputLogListBox.Name = "outputLogListBox";
-            this.outputLogListBox.Size = new System.Drawing.Size(972, 106);
+            this.outputLogListBox.Size = new System.Drawing.Size(972, 109);
             this.outputLogListBox.TabIndex = 6;
             // 
             // entriesListView
