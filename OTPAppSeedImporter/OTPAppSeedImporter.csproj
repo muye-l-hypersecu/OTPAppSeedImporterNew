@@ -15,6 +15,9 @@
     <Product>OTPAppSeedImporter</Product>
     <Copyright>Copyright (C) 2025 Hypersecu Information Systems Inc.</Copyright>
     <FileVersion>2.1.25.1112</FileVersion>
+	<PackageId>OTPAppSeedImporter</PackageId>
+    <Version>1.0.0.0</Version>
+	  <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>
