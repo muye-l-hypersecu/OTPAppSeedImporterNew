@@ -125,6 +125,31 @@ public static class DatabaseManager
         return duplicates;
 	}
 
+	// EFFECT: Removes duplicate serial numbers in the database
+	// RETURNS: true if the operation is successful
+	public static bool RemoveDuplicates(string dbPath, List<String> duplicates)
+	{
+        using var connection = new SQLiteConnection($"Data Source={dbPath}");
+        connection.Open();
+        using var command = connection.CreateCommand();
+
+		try
+		{
+            command.CommandText = "DELETE FROM ft_tokeninfo WHERE token = @token";
+            var tokenParam = command.Parameters.Add("@token", System.Data.DbType.String);
+            foreach (var token in duplicates)
+            {
+                tokenParam.Value = token;
+                command.ExecuteNonQuery();
+            }
+			return true;
+        }
+		catch
+		{
+			return false;
+		}
+		
+    }
 
 	// EFFECT: Checks if the provided specId is in the table.
 	private static bool IsValidSpecId(SQLiteConnection connection, string specId)

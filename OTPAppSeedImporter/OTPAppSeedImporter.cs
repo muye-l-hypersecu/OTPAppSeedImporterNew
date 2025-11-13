@@ -16,6 +16,7 @@ namespace OTPAppSeedImporter
         private bool seedFileSelected;
         private bool dbFileSelected;
         private string databasePath;
+        private string specId;
         private List<string> dbDuplicates;
         private Pair<List<SeedEntry>, Pair<int, int>> parsedFile;
         // number of spaces between SN and seed in listbox
@@ -77,32 +78,16 @@ namespace OTPAppSeedImporter
                         button6.Visible = true;
                         if (dbDuplicates.Count == 1)
                         {
-                            outputLogListBox.Items.Insert(0, $"{localTime} ERROR: There is 1 token serial number already in the database, which is listed below:");
+                            outputLogListBox.Items.Insert(0, $"{localTime} ERROR: There is 1 serial number already in the database, which is listed below:");
                         }
                         else
                         {
-                            outputLogListBox.Items.Insert(0, $"{localTime} ERROR: There are {dbDuplicates.Count} token serial numbers already in the database, which are listed below:");
+                            outputLogListBox.Items.Insert(0, $"{localTime} ERROR: There are {dbDuplicates.Count} serial numbers already in the database, which are listed below:");
                         }
                     }
                     else
                     {
-                        string specId = specComboBox.SelectedItem.ToString();
-                        int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
-                        outputLogListBox.Items.Insert(0, string.Empty);
-                        if (numEntriesSuccess == 1)
-                        {
-                            outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Imported 1 token entry to the database.");
-                            MessageBox.Show("SUCCESS: Imported 1 token entry to the database.", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Imported {numEntriesSuccess} token entries to the database.");
-                            MessageBox.Show($"SUCCESS: Imported {numEntriesSuccess} token entries to the database.", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-
-                        // Reset the page
-                        ResetPage();
-
+                        importToDatabase();
                     }
 
                 }
@@ -289,52 +274,59 @@ namespace OTPAppSeedImporter
         // Remove duplicates button
         private void button6_Click(object sender, EventArgs e)
         {
-            // Get confirmation message and remove duplicates. Also make the button invisible
-            var confirmationMessage = MessageBox.Show("Are you sure you want to remove duplicates?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            // Get confirmation message and remove duplicates.
+            var confirmationMessage = MessageBox.Show("Are you sure you want to remove duplicates from the database?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirmationMessage == DialogResult.Yes)
             {
-                foreach (string duplicate in dbDuplicates)
+                var finalConfirmation = MessageBox.Show("Duplicate serial numbers will be removed from the database.", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+                if (finalConfirmation == DialogResult.OK)
                 {
-                    suppressResize = true;
-                    for (int i = entriesListView.Items.Count - 1; i >= 0; i--)
+                    var duplicatesRemoved = DatabaseManager.RemoveDuplicates(databasePath, dbDuplicates);
+                    DateTime localTime = DateTime.Now;
+                    outputLogListBox.Items.Insert(0, string.Empty);
+                    if (duplicatesRemoved)
                     {
-                        ListViewItem row = entriesListView.Items[i];
-
-                        // First column is the serial number
-                        string serial = row.Text;
-
-                        if (serial == duplicate)
+                        // Add a log to the output
+                        outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Duplicate serial numbers were removed from the database.");
+                        var continueMessage = MessageBox.Show("Successfully removed duplicates from the database.\nDo you want to continue to import the seed file into the database?", "Continue", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (continueMessage == DialogResult.Yes)
                         {
-                            // Remove from your underlying data structure
-                            var entryToRemove = parsedFile.First.FirstOrDefault(e => e.GetSerialNumber() == duplicate);
-                            if (entryToRemove != null)
-                            {
-                                parsedFile.First.Remove(entryToRemove);
-                            }
-
-                            // Remove from UI
-                            entriesListView.Items.RemoveAt(i);
+                            importToDatabase();
                         }
+                        button6.Visible = false;
                     }
-                    suppressResize = false;
-                }
-                button6.Visible = false;
-
-                // Add a log to the output
-                DateTime localTime = DateTime.Now;
-                outputLogListBox.Items.Insert(0, string.Empty);
-                outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Removed duplicate token entries.");
-
-                // Display warning if there are no entries left.
-                if (parsedFile.First.Count == 0)
-                {
-                    outputLogListBox.Items.Insert(0, $"{localTime} WARNING: There are no serial numbers left to import.");
+                    else
+                    {
+                        outputLogListBox.Items.Insert(0, $"{localTime} ERROR: Could not remove duplicate serial numbers from the database. Please check the database or seed file.");
+                    }
                 }
             }
 
         }
 
         ///// HELPER FUNCTIONS /////
+        
+        // Imports the seed file into the database and gives appropriate messages in the output log
+        private void importToDatabase()
+        {
+            specId = specComboBox.SelectedItem.ToString();
+            int numEntriesSuccess = DatabaseManager.InsertSeedEntries(databasePath, parsedFile.First, specId);
+            DateTime localTime = DateTime.Now;
+            outputLogListBox.Items.Insert(0, string.Empty);
+            if (numEntriesSuccess == 1)
+            {
+                outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Imported 1 token entry to the database.");
+                MessageBox.Show("SUCCESS: Imported 1 token entry to the database.", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                outputLogListBox.Items.Insert(0, $"{localTime} SUCCESS: Imported {numEntriesSuccess} token entries to the database.");
+                MessageBox.Show($"SUCCESS: Imported {numEntriesSuccess} token entries to the database.", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            // Reset the page
+            ResetPage();
+        }
 
         // Resets the inputs, except for the bottom listbox message output
         private void ResetPage()
