@@ -100,7 +100,6 @@ public static class DatabaseManager
 
         var duplicates = new List<string>();
 
-		// A query to check the existing serialNumber
 		using var command = connection.CreateCommand();
 
 		bool tableExists = TablesExist(connection);
@@ -109,7 +108,8 @@ public static class DatabaseManager
             throw new InvalidOperationException("Required tables 'ft_tokeninfo' and/or 'ft_tokenspec' do not exist in the database.");
         }
 
-		command.CommandText = "SELECT token FROM ft_tokeninfo WHERE token = @token";
+        // A query to check the existing serialNumber
+        command.CommandText = "SELECT token FROM ft_tokeninfo WHERE token = @token";
 		var tokenParam = command.Parameters.Add("@token", System.Data.DbType.String);
 
 		foreach (var entry in entries)
